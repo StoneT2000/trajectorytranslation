@@ -11,6 +11,10 @@ conda create -f environment.yml
 conda activate tr2
 ```
 
+And then run
+```
+python setup.py develop
+```
 
 ## Organization
 

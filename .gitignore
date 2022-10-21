@@ -21,7 +21,6 @@ wandb
 
 # TODO uncomment once ready
 skilltranslation/planner
-skilltranslation/models
 skilltranslation/envs
 scripts/
 Dockerfile
