@@ -3,17 +3,18 @@ LSTM backbone
 """
 
 import numpy as np
-from skilltranslation.data.utils import MinMaxScaler
-from skilltranslation.models.encoders.base import Encoder
-from skilltranslation.models.utils import act2fnc
 import torch
 import torch.nn as nn
 import transformers
 from gym.spaces import Box, Discrete
-from paper_rl.architecture.ac.core import Actor, mlp
 from torch.distributions.normal import Normal
 
+from paper_rl.architecture.ac.core import Actor, mlp
+from skilltranslation.data.utils import MinMaxScaler
+from skilltranslation.models.encoders.base import Encoder
 from skilltranslation.models.translation.model import TranslationPolicy
+from skilltranslation.models.utils import act2fnc
+
 
 class LSTM(TranslationPolicy):
     """

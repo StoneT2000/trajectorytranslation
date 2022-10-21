@@ -1,14 +1,17 @@
-from skilltranslation.utils.vision import get_point_from_image, get_segmented_point_clouds
-import torch
-import numpy as np
-from pathlib import Path
-import numpy as np
-import cv2
-from transforms3d.quaternions import mat2quat
-import trimesh
 import sys
-import sklearn
+from pathlib import Path
+
+import cv2
+import numpy as np
 import open3d as o3d
+import sklearn
+import torch
+import trimesh
+from transforms3d.quaternions import mat2quat
+
+from skilltranslation.utils.vision import (get_point_from_image,
+                                           get_segmented_point_clouds)
+
 
 def gen_cuboid_pcd(s=8):
     pcd = []
@@ -82,6 +85,8 @@ def predict_pose(rgb, depth, seg, meta, icp_config=dict(threshold=0.004)):
     q = mat2quat(pred_pose[:3, :3])
     return np.hstack([p, q])
 from sklearn.cluster import KMeans
+
+
 def predict_pose_noseg(rgb, depth, meta, min_clusters=1):
     # np.save("test.rgb.npy", rgb)
     pcd = get_point_from_image(meta['cam_int'],depth)
@@ -192,12 +197,15 @@ def view_pcd_bboxes(pcds, rgbs,zoom=0.12, poses=[], template_size=0.0235):
                                   up=[0,.0,1])
 
 def estimate_single_block_pose_realsense():
-    import pyrealsense2 as rs
-    import numpy as np
-    from skilltranslation.utils.vision import draw_projected_box3d, get_point_from_image
-    import skilltranslation.utils.pose_est as pose_est
-    import open3d as o3d
     from importlib import reload
+
+    import numpy as np
+    import open3d as o3d
+    import pyrealsense2 as rs
+
+    import skilltranslation.utils.pose_est as pose_est
+    from skilltranslation.utils.vision import (draw_projected_box3d,
+                                               get_point_from_image)
     pipeline = rs.pipeline()
     config = rs.config()
     config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)

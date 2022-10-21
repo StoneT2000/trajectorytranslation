@@ -1,13 +1,14 @@
-import torch
-import numpy as np
-from pathlib import Path
-import numpy as np
-import cv2
-from transforms3d.quaternions import quat2mat
-import trimesh
 import sys
-import sklearn
+from pathlib import Path
+
+import cv2
+import numpy as np
 import open3d
+import sklearn
+import torch
+import trimesh
+from transforms3d.quaternions import quat2mat
+
 VERTEX_COLORS = [
     (0, 0, 0),
     (1, 0, 0),

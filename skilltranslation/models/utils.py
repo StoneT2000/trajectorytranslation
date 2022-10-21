@@ -1,4 +1,6 @@
 import torch.nn as nn
+
+
 def act2fnc(act_name):
     if act_name == "relu":
         return nn.ReLU

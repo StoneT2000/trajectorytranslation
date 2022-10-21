@@ -1,4 +1,6 @@
 import torch.nn as nn
+
+
 class Encoder(nn.Module):
     def __init__(self, out_dims, input_shape) -> None:
         super().__init__()
