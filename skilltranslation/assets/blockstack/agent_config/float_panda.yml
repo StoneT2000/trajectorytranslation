@@ -1,0 +1,92 @@
+agent_class: "FloatPanda"
+name: "float_panda"
+urdf_file: "float_panda.urdf"
+urdf_config:
+  materials:
+    gripper:
+      static_friction: 2.0
+      dynamic_friction: 2.0
+      restitution: 0.0
+  links:
+    panda_leftfinger:
+      material: "gripper"
+      patch_radius: 0.1
+      min_patch_radius: 0.1
+    panda_rightfinger:
+      material: "gripper"
+      patch_radius: 0.1
+      min_patch_radius: 0.1
+cameras:
+  - name: "hand_camera"
+    mount: "panda_hand"
+    hide_mount_link: false
+    mount_p: [0.1, 0., 0.]
+    mount_q: [0., 0.60876137, 0., 0.7933534]
+    width: 128
+    height: 128
+    near: 0.001
+    far: 10
+    fx: 64
+    fy: 64
+    cx: 64
+    cy: 64
+    skew: 0
+sensors: []
+# default_init_qpos: [0, 0, 0.2, 0, 0, 1.5707963267948966, 0.04, 0.04]
+default_init_qpos: [0,0,0.2, 0.04, 0.04]
+# default_control_mode: "pd_joint_pos"
+default_control_mode: "pd_joint_delta_pos"
+#default_control_mode: "pd_joint_vel"
+torque_freq: 10
+controllers:
+  # pd_joint_vel:
+  #   - controller_type: "GeneralPDJointVelController"
+  #     interpolate: false
+  #     control_joints:
+  #       - "x_axis_joint"
+  #       - "y_axis_joint"
+  #       - "z_axis_joint"
+  #     controller_name: "ArmPDJointVelController"
+  #     joint_stiffness: 0
+  #     joint_damping: 1000
+  #     joint_friction: 0.1
+  #     joint_vel_min: -0.5
+  #     joint_vel_max: 0.5
+  #   - controller_type: "GripperPDJointPosMimicController"
+  #     interpolate: false
+  #     control_joints:
+  #       - "panda_finger_joint1"
+  #       - "panda_finger_joint2"
+  #     controller_name: "GripperController"
+  #     joint_stiffness: 1000
+  #     joint_damping: 100
+  #     joint_friction: 0.2
+  #     joint_force_limit: 10
+  #     joint_pos_min: 0.0
+  #     joint_pos_max: 0.04
+  pd_joint_delta_pos:
+    - controller_type: "GeneralPDJointPosController"
+      interpolate: false
+      use_delta: true
+      control_joints:
+        - "x_axis_joint"
+        - "y_axis_joint"
+        - "z_axis_joint"
+      controller_name: "ArmController"
+      joint_delta_pos_min: -0.2
+      joint_delta_pos_max: 0.2
+      joint_stiffness: 3000
+      joint_damping: 300
+      joint_friction: 0
+    - controller_type: "GripperPDJointPosMimicController"
+      interpolate: false
+      control_joints:
+        - "panda_finger_joint1"
+        - "panda_finger_joint2"
+      controller_name: "GripperController"
+      joint_stiffness: 50000
+      joint_damping: 3000
+      joint_friction: 0.2
+      joint_force_limit: 1000
+      joint_pos_min: 0.0
+      joint_pos_max: 0.04

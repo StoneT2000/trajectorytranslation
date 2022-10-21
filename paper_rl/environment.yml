@@ -1,0 +1,61 @@
+name: paper-rl
+channels:
+  - conda-forge
+  - pytorch
+  - huggingface
+dependencies:
+  # basics
+  - python=3.8
+  - numpy
+  - matplotlib
+  - dill
+  - pandas
+  - seaborn
+  - scipy
+  - jupyterlab
+  - pip
+  - ipdb
+  - cython
+  - scikit-learn
+  - tqdm
+  - yaml
+  - ipywidgets
+  - black
+  - isort
+
+  # RL related
+  - mpi4py
+  - gym
+  
+  # Deep Learning
+  - pytorch::pytorch
+  - torchvision
+  - torchaudio
+  # - cudatoolkit=11.3
+
+  - huggingface::transformers
+
+  # Vision
+  - opencv
+  - transforms3d
+
+  - pip:
+
+    # Simulators
+    - sapien
+
+    # Video generation
+    - moviepy
+
+    # Exp tracking
+    - tensorboard
+    - wandb
+    - omegaconf
+
+    # More Deep Learning
+    - tensorflow
+    - huggingface_hub
+    - pyglet>=1.4.0
+
+    # More RL
+    - stable-baselines3
