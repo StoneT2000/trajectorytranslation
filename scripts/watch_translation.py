@@ -2,22 +2,22 @@ import pickle
 import time
 import numpy as np
 from omegaconf import OmegaConf
-from skilltranslation.data.teacherstudent import TeacherStudentDataset
-from skilltranslation.data.utils import MinMaxScaler
-from skilltranslation.models.translation.lstm import LSTM
+from tr2.data.teacherstudent import TeacherStudentDataset
+from tr2.data.utils import MinMaxScaler
+from tr2.models.translation.lstm import LSTM
 import gym
 from paper_rl.cfg import parse
-from skilltranslation.models.translation.mlp_id import MLPTranslationID, MLPTranslationIDTeacherStudentActorCritic
+from tr2.models.translation.mlp_id import MLPTranslationID, MLPTranslationIDTeacherStudentActorCritic
 import torch
-from skilltranslation.models.translation.translation_transformer import (
+from tr2.models.translation.translation_transformer import (
     TranslationTeacherStudentActorCritic,
     TranslationTransformerGPT2,
 )
-from skilltranslation.utils.animate import animate
+from tr2.utils.animate import animate
 import os.path as osp
-import skilltranslation.envs.boxpusher.traj_env
+import tr2.envs.boxpusher.traj_env
 # import skilltranslation.envs.maniskill.traj_env
-import skilltranslation.envs.maze.traj_env
+import tr2.envs.maze.traj_env
 
 def main(cfg):
 

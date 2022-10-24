@@ -3,23 +3,23 @@ import gym
 from omegaconf import OmegaConf
 import pandas as pd
 
-from skilltranslation.models.translation.lstm import LSTM
-from skilltranslation.models.translation.mlp_id import MLPTranslationID, MLPTranslationIDTeacherStudentActorCritic
+from tr2.models.translation.lstm import LSTM
+from tr2.models.translation.mlp_id import MLPTranslationID, MLPTranslationIDTeacherStudentActorCritic
 import torch
-from skilltranslation.models.translation.translation_transformer import (
+from tr2.models.translation.translation_transformer import (
     TranslationTeacherStudentActorCritic,
     TranslationTransformerGPT2,
 )
-from skilltranslation.models.translation.convnet import TranslationConvNet
+from tr2.models.translation.convnet import TranslationConvNet
 
-from skilltranslation.utils.animate import animate
+from tr2.utils.animate import animate
 import os.path as osp
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecVideoRecorder
 from tqdm import tqdm
 import numpy as np
 from multiprocessing import Pool
-from skilltranslation.data.teacherstudent import TeacherStudentDataset
-from skilltranslation.data.utils import MinMaxScaler
+from tr2.data.teacherstudent import TeacherStudentDataset
+from tr2.data.utils import MinMaxScaler
 from paper_rl.common.rollout import Rollout
 from paper_rl.cfg import parse
 
@@ -96,13 +96,13 @@ def main(cfg):
     ids_per_env = len(ids) // n_envs
     def make_env(idx):
         def _init():
-            import skilltranslation.envs
+            import tr2.envs
             env_kwargs = OmegaConf.to_container(env_cfg)
             env_kwargs["trajectories"] = ids[idx * ids_per_env: (idx + 1) * ids_per_env]
             if "planner_cfg" in env_kwargs and env_kwargs["planner_cfg"] is not None:
                 if "BoxPusherTrajectory" in cfg.env:
-                    from skilltranslation.envs.boxpusher.env import BoxPusherEnv
-                    from skilltranslation.planner.boxpusherteacher import BoxPusherTaskPlanner
+                    from tr2.envs.boxpusher.env import BoxPusherEnv
+                    from tr2.planner.boxpusherteacher import BoxPusherTaskPlanner
                     planner = BoxPusherTaskPlanner()
                     planning_env = BoxPusherEnv(
                         **env_kwargs["planner_cfg"]["env_cfg"]
@@ -111,9 +111,9 @@ def main(cfg):
                     planner.set_type(1)
                     planning_env.reset()
                 elif "BlockStack" in cfg.env:
-                    from skilltranslation.envs.blockstacking.env import BlockStackMagicPandaEnv
+                    from tr2.envs.blockstacking.env import BlockStackMagicPandaEnv
                     from mani_skill2.utils.wrappers import ManiSkillActionWrapper, NormalizeActionWrapper
-                    from skilltranslation.planner.blockstackplanner import BlockStackPlanner
+                    from tr2.planner.blockstackplanner import BlockStackPlanner
                     planner = BlockStackPlanner(replan_threshold=1e-1)
                     planning_env = BlockStackMagicPandaEnv(obs_mode="state_dict", goal=env_cfg.goal, num_blocks=1 if 'train' in env_cfg.goal else -1)
                     planning_env = ManiSkillActionWrapper(planning_env)
@@ -121,7 +121,7 @@ def main(cfg):
                     planning_env.seed(0)
                     planning_env.reset()
                 elif "OpenDrawer" in cfg.env:
-                    from skilltranslation.planner.opendrawerplanner import OpenDrawerPlanner
+                    from tr2.planner.opendrawerplanner import OpenDrawerPlanner
                     from mani_skill.env.open_cabinet_door_drawer import OpenCabinetDrawerMagicEnv_CabinetSelection
                     planner = OpenDrawerPlanner(replan_threshold=1e-2)
                     # we only need planning env to get details about the object used

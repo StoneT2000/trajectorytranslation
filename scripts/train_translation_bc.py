@@ -10,14 +10,14 @@ from omegaconf import DictConfig, OmegaConf
 from paper_rl.cfg.parse import clean_and_transform, parse_cfg
 from paper_rl.logger.logger import Logger
 from tqdm import tqdm
-from skilltranslation.envs.evaluate import evaluate_online
-from skilltranslation.models.translation.convnet import TranslationConvNet
+from tr2.envs.evaluate import evaluate_online
+from tr2.models.translation.convnet import TranslationConvNet
 
-import skilltranslation.training.train as train
-from skilltranslation.data.teacherstudent import TeacherStudentDataset
-from skilltranslation.models.translation.lstm import LSTM
-from skilltranslation.models.translation.model import TranslationPolicy
-from skilltranslation.models.translation.translation_transformer import \
+import tr2.training.train as train
+from tr2.data.teacherstudent import TeacherStudentDataset
+from tr2.models.translation.lstm import LSTM
+from tr2.models.translation.model import TranslationPolicy
+from tr2.models.translation.translation_transformer import \
     TranslationTransformerGPT2
 
 

@@ -7,16 +7,16 @@ import numpy as np
 import sapien.core as sapien
 import tqdm
 import os.path as osp
-import skilltranslation.envs
+import tr2.envs
 
 from tqdm import tqdm
-from skilltranslation.planner.boxpusherteacher import BoxPusherReacherPlanner, BoxPusherTaskPlanner
+from tr2.planner.boxpusherteacher import BoxPusherReacherPlanner, BoxPusherTaskPlanner
 from paper_rl.common.rollout import Rollout
 from stable_baselines3.common.vec_env import SubprocVecEnv
 
-from skilltranslation.utils.sampling import resample_teacher_trajectory
-from skilltranslation.envs.xmagical.register_envs import register_envs
-from skilltranslation.envs.xmagical.env import SweepToTopEnv
+from tr2.utils.sampling import resample_teacher_trajectory
+from tr2.envs.xmagical.register_envs import register_envs
+from tr2.envs.xmagical.env import SweepToTopEnv
 register_envs()
 save_folder = osp.join("./datasets", "xmagical")
 if not osp.isdir(save_folder):
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     
     def make_env(idx):
         def _init():
-            import skilltranslation.envs.boxpusher.traj_env
+            import tr2.envs.boxpusher.traj_env
             embodiment = 'Shortstick'
             env = gym.make(f'SweepToTop-{embodiment}-State-Allo-TestLayout-v0')
             env.seed(idx)

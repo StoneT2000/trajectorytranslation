@@ -11,9 +11,9 @@ from torch.distributions.categorical import Categorical
 from torch.distributions.normal import Normal
 
 from paper_rl.architecture.ac.core import Actor, mlp
-from skilltranslation.data.utils import MinMaxScaler
-from skilltranslation.models.translation.model import TranslationPolicy
-from skilltranslation.models.utils import act2fnc
+from tr2.data.utils import MinMaxScaler
+from tr2.models.translation.model import TranslationPolicy
+from tr2.models.utils import act2fnc
 
 
 class MLPTranslationID(TranslationPolicy):

@@ -1,55 +1,59 @@
-import gym
-from multiprocessing import Pool
-from pathlib import Path
-import os.path as osp
-import pickle
 import numpy as np
+from mani_skill.env.open_cabinet_door_drawer import (
+    OpenCabinetDrawerEnv_CabinetSelection, OpenCabinetDrawerMagicEnv)
+
+from tr2.planner.base import HighLevelPlanner
 from tr2.utils.sampling import resample_teacher_trajectory
-from omegaconf import OmegaConf
-try:
-    import mani_skill.env
-    from mani_skill.env.open_cabinet_door_drawer import OpenCabinetDrawerMagicEnv
-except:
-    print( "#" * 15, "no Maniskill 1", "#" * 15,)
-from tqdm import tqdm
-from tr2.utils.animate import animate
-drawer_idx = [
-1000 ,
-1004 ,
-1005 ,
-1016 ,
-1021 ,
-1024 ,
-1027 ,
-1032 ,
-1033 ,
-1038 ,
-1040 ,
-1044 ,
-1045 ,
-1052 ,
-1054 ,
-1061 , #1
-1063 , #1
-1066 , #1
-1067 , #1
-1076 , #4
-1079 , #3
-1082  #3
-]
 
-two_drawer_idx = [1000, 1004, 1005, 1016,1024,1033,1044, 1076,1079, 1082]
-# reset z-base as well 
 
-def sanity_check():
-    env = gym.make('OpenCabinetDrawerMagic-v0')
-    env.set_env_mode(obs_mode='state', reward_type='sparse')
-    env.reset(level=0)
-    for i in range(200):
-        env.step(np.zeros(5))
-    print("sanity check passed")
+class OpenDrawerPlanner(HighLevelPlanner):
 
-def collect_heuristic_teacher_traj(env: OpenCabinetDrawerMagicEnv, render=False, mode='color_image', obs_mode='state', task='open', end_move_away_dist=0.0):
+
+    def __init__(self,
+                 replan_threshold=1e-5,
+                 # hand_threshold=0.02,
+                 # block_diff_threshold=0.02,
+
+
+                 **kwargs):
+        super().__init__(**kwargs)
+        self.replan_threshold = replan_threshold
+        # self.hand_threshold = hand_threshold
+        # self.block_diff_threshold = block_diff_threshold
+
+    def need_replan(self, curr_state, student_obs, teacher_trajectory, env):
+        env: OpenCabinetDrawerEnv_CabinetSelection
+        if len(student_obs['observation'].shape) == 2:
+            dense_obs = student_obs['observation'][-1]
+        else:
+            dense_obs = student_obs['observation']
+        # check opened enough, and check far away enough
+        eval_flag_dict = env.compute_eval_flag_dict()
+        target_opened = eval_flag_dict["open_enoughs"][env.target_index]
+
+        if eval_flag_dict["open_enough"]:
+            # just wait for cabinet static, dont replan again
+            return False
+
+        far_enough = False
+        # import pdb;pdb.set_trace()
+        dist_to_rest = np.linalg.norm(dense_obs[26:29] - teacher_trajectory[-1][:3])
+        # large margin since its not super important to return exactly and our policies when trained for just 1k steps haven't learned to return to rest
+        far_enough = dist_to_rest < 4e-1 
+        match_end = (np.linalg.norm(dense_obs[26:29] - teacher_trajectory[:, :3], axis=1)).argmin() >= len(teacher_trajectory) - 2
+        return target_opened #and far_enough and match_end
+    def generate_magic_teacher_traj_for_env(self, obs, render):
+        # is_grasped = obs['is_grasped']
+        planning_env = obs['planning_env']
+        magic_traj = collect_heuristic_teacher_traj(planning_env, render=render, obs_mode='custom', task='open')
+        observations = magic_traj["observations"]
+        observations = resample_teacher_trajectory(np.array(observations), max_dist=5e-2)
+        return observations
+    def act(self, obs):
+        pass
+
+
+def collect_heuristic_teacher_traj(env: OpenCabinetDrawerMagicEnv, render=False, mode='human', obs_mode='state', task='open', end_move_away_dist=0.0):
     # env should be configured, seeded and reset outside
     ## checks
     if env.connected is not False:
@@ -76,8 +80,8 @@ def collect_heuristic_teacher_traj(env: OpenCabinetDrawerMagicEnv, render=False,
     
     vids = []
     if render and mode =='human':
-        env.render()
-        env.viewer.paused=True
+        viewer = env.render(mode)
+        viewer.paused=True
     curr_xyz = env.agent.robot.get_qpos()[:3]
     robot = env.agent.robot
     handle_bbox = parse_teacher_obs(env.get_obs())[3:]
@@ -139,7 +143,8 @@ def collect_heuristic_teacher_traj(env: OpenCabinetDrawerMagicEnv, render=False,
     
     xyz = [mins[0]-0.1, (mins[1] + maxs[1])/2, (mins[2] + maxs[2]) / 2 ] ## if set_qpos -0.11 is too close, but works in this code
     init_xyz = list(env.agent.robot.get_qpos()[:3]).copy()
-    end_noise = np.random.rand(3) * end_move_away_dist
+    end_noise = np.zeros(3) #np.random.rand(3) * end_move_away_dist
+    end_noise[0] = 0.1
     end_noise[0] = end_noise[0] * -1
     
     goal1 = np.array(init_xyz + [0.04, 0.04])
@@ -151,7 +156,7 @@ def collect_heuristic_teacher_traj(env: OpenCabinetDrawerMagicEnv, render=False,
 
 
     if task == 'open':
-        end_xyz = goal3[:3] + end_noise
+        end_xyz = init_xyz#goal3[:3] + end_noise
         if not goto(xyz=goal1[:3], gripper_action=None): return None
 
         if not goto(xyz=goal2[:3], gripper_action=None): return None
@@ -203,116 +208,3 @@ def collect_heuristic_teacher_traj(env: OpenCabinetDrawerMagicEnv, render=False,
     if not render:
         return teacher_traj
     return teacher_traj
-
-def collect_dataset(mode, id_range=(0,100), drawer_rng=(0,10), render=False, obs_mode='state'): # not including mode for simplicity
-    dataset = dict(
-        teacher=dict()
-    )
-    drawer_id_list = drawer_idx
-    if mode == 'opentwo':
-        drawer_id_list = two_drawer_idx
-    for idx in drawer_id_list[drawer_rng[0]:drawer_rng[1]]:
-        teacher_env_name = 'OpenCabinetDrawerMagic_' + str(idx) + '-v0'
-        student_env_name = f'OpenCabinetDrawer_{idx}-v0'
-
-        teacher_env = gym.make(teacher_env_name)
-        student_env = gym.make(student_env_name)
-        teacher_env.set_env_mode(obs_mode=obs_mode, reward_type='sparse')
-        student_env.set_env_mode(obs_mode=obs_mode, reward_type='sparse')
-
-        for level in tqdm(range(id_range[0], id_range[1])):
-            teacher_env.reset(level=level)
-            student_env.reset(level=level)
-            state = student_env.get_state()
-            if teacher_env.task == 'close': continue # skip close tasks for now
-            config=dict(
-                target_link_id=teacher_env.target_index,
-                cabinet_id=idx,
-                level=level,
-                task=teacher_env.task,
-                env_init_state=state
-            )
-            # print(config)
-            # print(student_env.get_obs()[33:], teacher_env.get_obs()[10:])
-            student_env.set_state(state)
-            if obs_mode == 'state' or obs_mode=='custom':
-                init_teacher_qpos = np.hstack([student_env.get_obs()[26:29],np.array([0.04,0.04])])
-            else:
-                init_teacher_qpos = np.hstack([student_env.get_obs()['agent'][26:29],np.array([0.04,0.04])])
-
-            teacher_env.agent.robot.set_qpos(init_teacher_qpos)
-            
-            # if render:
-            #     vids = collect_heuristic_teacher_traj(teacher_env, render=True, mode='color_image', obs_mode=obs_mode, task=config['task'], end_move_away_dist=0.5)
-            #     assert vids is not None
-            #     animate(vids, 'env{}level{}.mp4'.format(idx, level), fps=40)
-            # else
-            traj_dict = collect_heuristic_teacher_traj(teacher_env, render=render, mode='human', obs_mode=obs_mode, task=config['task'], end_move_away_dist=0.25)
-            if traj_dict is None:
-                print(f"== env {idx} seed {level} unsuccesful")
-                continue
-            # print("###",len(traj_dict["observations"]))
-            observations = resample_teacher_trajectory(np.array(traj_dict['observations']), max_dist=5e-2)
-            dataset['teacher'][f"{idx}-{level}"] = dict(
-                config=config,
-                observations=observations,
-                )
-
-    return dataset
-def collect_dataset_helper(args):
-    return collect_dataset(args[0], args[1], args[2], args[3], args[4])
-if __name__ == '__main__':
-    
-    sanity_check()
-    cfg = OmegaConf.from_cli()
-    save_path = cfg.save_path
-    # size = cfg.size
-
-    N = 2
-    if "n" in cfg:
-        N = cfg.n
-    cpu = 16
-    mode = 'train'
-    obs_mode = 'state'
-    if 'obs_mode' in cfg:
-        obs_mode = cfg['obs_mode']
-    if 'mode' in cfg:
-        mode = cfg['mode']
-    if 'cpu' in cfg:
-        cpu = cfg['cpu']
-    ids_per_proc = N // cpu
-    args = []
-    if mode == 'train':
-        drawer_rng = (0,8)
-    elif mode == 'test':
-        drawer_rng = (8,22)
-    elif mode == 'opentwo':
-        drawer_rng = (0, len(two_drawer_idx))
-    for x in range(cpu):
-        arg_rng = (x * ids_per_proc, (x+1) * ids_per_proc)
-        args.append((mode, arg_rng, drawer_rng, False, obs_mode))
-        print(arg_rng)
-    # ds = collect_dataset(id_range=(7,8), drawer_rng=(6,8), render=True, obs_mode='custom')
-    # exit()
-    try:
-        from multiprocessing import set_start_method
-        set_start_method('spawn')
-    except RuntimeError:
-        print('Cannot set start method to spawn')
-
-    with Pool(cpu) as p:
-        datasets = list(tqdm(p.imap(collect_dataset_helper, args), total=N))
-    
-    dataset = dict(student=dict(), teacher=dict())
-    for d in datasets:
-        for traj_id in d['teacher']:
-            dataset['teacher'][traj_id] = d['teacher'][traj_id]
-    Path(osp.dirname(save_path)).mkdir(parents=True, exist_ok=True)
-    np.save(osp.join(osp.dirname(save_path), f"dataset_{mode}_sim_ids.npy"), sorted(list(dataset['teacher'].keys())))
-    print(f"=== Generated {len(dataset['teacher'])} teacher trajectories ===")
-    
-    dataset_file=open(save_path, "wb")
-    import pickle
-    pickle.dump(dataset, dataset_file)
-    dataset_file.close()
-    exit()

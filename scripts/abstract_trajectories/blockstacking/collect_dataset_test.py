@@ -1,12 +1,12 @@
 import pickle
 from omegaconf import OmegaConf
-from skilltranslation.envs.blockstacking import BlockStackFloatPandaEnv
+from tr2.envs.blockstacking import BlockStackFloatPandaEnv
 import gym
 import numpy as np
 from mani_skill2.utils.wrappers import ManiSkillActionWrapper, NormalizeActionWrapper
 import os.path as osp
-from skilltranslation.envs.blockstacking.env import BlockStackMagicPandaEnv
-from skilltranslation.utils.sampling import resample_teacher_trajectory
+from tr2.envs.blockstacking.env import BlockStackMagicPandaEnv
+from tr2.utils.sampling import resample_teacher_trajectory
 from pathlib import Path
 import sapien.core as sapien
 def animate(imgs, filename="animation.mp4", _return=True, fps=10):

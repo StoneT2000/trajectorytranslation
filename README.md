@@ -15,7 +15,7 @@ conda activate tr2
 
 And then run
 ```
-pip install -e . && pip install -e paper_rl
+pip install -e . paper_rl external/ManiSkill2 external/ManiSkill
 ```
 
 ## Usage

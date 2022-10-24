@@ -1,16 +1,16 @@
 from pathlib import Path
 import pickle
 import pandas as pd
-from skilltranslation.envs.evaluate import evaluate_online
-from skilltranslation.models.translation.lstm import LSTM, LSTMTeacherStudentActorCritic
-from skilltranslation.models.translation.mlp_id import MLPTranslationID, MLPTranslationIDTeacherStudentActorCritic
-from skilltranslation.utils.animate import animate
+from tr2.envs.evaluate import evaluate_online
+from tr2.models.translation.lstm import LSTM, LSTMTeacherStudentActorCritic
+from tr2.models.translation.mlp_id import MLPTranslationID, MLPTranslationIDTeacherStudentActorCritic
+from tr2.utils.animate import animate
 import sys
 import gym
 import numpy as np
-from skilltranslation.data.teacherstudent import TeacherStudentDataset
-from skilltranslation.models.translation.translation_transformer import TranslationTeacherStudentActorCritic, TranslationTransformerGPT2
-from skilltranslation.utils.tools import merge
+from tr2.data.teacherstudent import TeacherStudentDataset
+from tr2.models.translation.translation_transformer import TranslationTeacherStudentActorCritic, TranslationTransformerGPT2
+from tr2.utils.tools import merge
 import torch
 import torch.utils.data
 from omegaconf import DictConfig, OmegaConf
@@ -134,10 +134,10 @@ def main(cfg):
     # env_cfg["teacher_dims"] = model_cfg["teacher_dims"]
     # env_cfg["state_dims"] = model_cfg["state_dims"]
     # env_cfg["act_dims"] = model_cfg["act_dims"]
-    import skilltranslation.envs
+    import tr2.envs
     def make_env(idx):
         def _init():
-            import skilltranslation.envs
+            import tr2.envs
             del env_cfg.trajectories
             env = gym.make(
                 cfg.env, 

@@ -9,7 +9,7 @@ import torch
 import trimesh
 from transforms3d.quaternions import mat2quat
 
-from skilltranslation.utils.vision import (get_point_from_image,
+from tr2.utils.vision import (get_point_from_image,
                                            get_segmented_point_clouds)
 
 
@@ -203,8 +203,8 @@ def estimate_single_block_pose_realsense():
     import open3d as o3d
     import pyrealsense2 as rs
 
-    import skilltranslation.utils.pose_est as pose_est
-    from skilltranslation.utils.vision import (draw_projected_box3d,
+    import tr2.utils.pose_est as pose_est
+    from tr2.utils.vision import (draw_projected_box3d,
                                                get_point_from_image)
     pipeline = rs.pipeline()
     config = rs.config()

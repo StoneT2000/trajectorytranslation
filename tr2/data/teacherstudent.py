@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 
-from skilltranslation.data.utils import MinMaxScaler, get_trajectory_pairs
+from tr2.data.utils import MinMaxScaler, get_trajectory_pairs
 
 
 # from torch.utils.data import Dataset

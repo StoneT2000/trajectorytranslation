@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.tensorboard import SummaryWriter
 
-from skilltranslation.models.translation.model import TranslationPolicy
+from tr2.models.translation.model import TranslationPolicy
 
 
 class Trainer:

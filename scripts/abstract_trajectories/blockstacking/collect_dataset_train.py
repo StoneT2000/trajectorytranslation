@@ -1,16 +1,16 @@
 from multiprocessing import Pool
 from pathlib import Path
 from omegaconf import OmegaConf
-from skilltranslation.envs.blockstacking import BlockStackFloatPandaEnv
+from tr2.envs.blockstacking import BlockStackFloatPandaEnv
 import gym
 import numpy as np
 from mani_skill2.utils.wrappers import ManiSkillActionWrapper, NormalizeActionWrapper
-from skilltranslation.envs.blockstacking import BlockStackFloatPandaEnv, BlockStackMagicPandaEnv
+from tr2.envs.blockstacking import BlockStackFloatPandaEnv, BlockStackMagicPandaEnv
 import gym
 import numpy as np
 from mani_skill2.utils.wrappers import ManiSkillActionWrapper, NormalizeActionWrapper
 
-from skilltranslation.utils.sampling import resample_teacher_trajectory
+from tr2.utils.sampling import resample_teacher_trajectory
 
 
 def animate(imgs, filename="animation.mp4", _return=True, fps=10):
