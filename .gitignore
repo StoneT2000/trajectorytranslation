@@ -22,7 +22,8 @@ wandb
 # TODO uncomment once ready
 skilltranslation/planner
 skilltranslation/envs
-scripts/
+scripts/realworld
+scripts/plan_translate.py
 Dockerfile
 ManiskillDockerfile
 
