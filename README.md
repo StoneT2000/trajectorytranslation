@@ -1,6 +1,12 @@
 # Abstract-to-Executable Trajectory Translation for One Shot Task Generalization
 
-This is the official codebase for the paper: [TODO]
+This is the official codebase for the paper
+
+[Abstract-to-Executable Trajectory Translation for One Shot Task Generalization](https://arxiv.org/abs/2210.07658) by
+
+
+[Stone Tao](https://stoneztao.com/), [Xiaochen Li](https://sites.google.com/view/xiaochen-li), [Tongzhou Mu](https://cseweb.ucsd.edu//~t3mu/), [Zhiao Huang](https://sites.google.com/view/zhiao-huang), [Yuzhe Qin](https://yzqin.github.io/), [Hao Su](https://cseweb.ucsd.edu/~haosu/)
+
 
 [TODO, add graphic?]
 
@@ -15,7 +21,10 @@ conda activate tr2
 
 And then run
 ```
-pip install -e . paper_rl external/ManiSkill2 external/ManiSkill
+pip install -e ./paper_rl/
+pip install -e . 
+pip install -e external/ManiSkill2 
+pip install -e external/ManiSkill # used only for the open drawer environment
 ```
 
 ## Usage
