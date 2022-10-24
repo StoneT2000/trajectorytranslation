@@ -25,3 +25,6 @@ skilltranslation/envs
 scripts/
 Dockerfile
 ManiskillDockerfile
+
+resultsall
+allcfgs

@@ -1,0 +1,31 @@
+device: "cpu"
+env: "???"
+
+
+env_cfg:
+  # whether done signal is based on matching path or task success 
+  # with task success, you can avoid the directed teacher path and achieve the same end state and be given success signal
+  task_agnostic: True
+  reward_type: "trajectory"
+
+  # trajectory ids to evaluate on
+  trajectories: None
+
+  # the dataset with teacher trajectories (student not necessary)
+  trajectories_dataset: None
+  max_trajectory_skip_steps: 10
+  planner_cfg:
+    planner: "???"
+    planning_env: "???"
+    render_plan: False
+    max_plan_length: 64
+
+# If True, masks out teacher trajectory and zeros it out
+ignore_teacher: False
+# If True, saves video locally
+save_video_path: None
+
+# path to model weights. Model should be a TranslationPolicy
+model: "???"
+
+# n_envs: 1

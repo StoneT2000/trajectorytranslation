@@ -1,0 +1,20 @@
+env: "BlockStackTrajectory-v0"
+env_cfg:
+  early_success: True
+  task_agnostic: False
+  reward_type: "trajectory"
+  trajectories: "datasets/blockstacking/dataset_train_ids.npy"
+  trajectories_dataset: "datasets/blockstacking/dataset.pkl"
+  max_trajectory_skip_steps: 15
+  fixed_max_ep_len: 200
+  give_traj_id: False
+  max_trajectory_length: 1000
+  max_rot_stray_dist: 0.25
+  max_world_state_stray_dist: 0.03
+  max_coord_stray_dist: 0.03
+  robot_type: 'Arm'
+  controller: 'ee'
+  goal: pick_and_place_train
+
+test_n: 128
+n_envs: 16

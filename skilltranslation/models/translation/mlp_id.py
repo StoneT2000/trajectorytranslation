@@ -100,7 +100,7 @@ class MLPTranslationID(TranslationPolicy):
         hidden_size - hidden size in GPT2 transformer
         """
         for k in kwargs:
-            print(f"MLPID Model given kwargs {k} not used")
+            print(f"MLP Model given kwargs {k} not used")
         max_length = 1
         assert stack_size == 1
         super().__init__(state_dims=state_dims, act_dims=act_dims, teacher_dims=teacher_dims, max_length=max_length)

@@ -1,0 +1,36 @@
+device: "cuda"
+env: "???"
+
+
+env_cfg:
+  # whether done signal is based on matching path or task success 
+  # with task success, you can avoid the directed teacher path and achieve the same end state and be given success signal
+  task_agnostic: True
+  reward_type: "trajectory"
+  randomize_trajectories: False # env after each reset will go through each new seed
+
+  # trajectory ids to evaluate on
+  trajectories: "???"
+
+  # the dataset with teacher trajectories (student not necessary)
+  trajectories_dataset: "???"
+  max_trajectory_skip_steps: 10
+
+# If True, masks out teacher trajectory and zeros it out
+ignore_teacher: False
+# If True, saves video locally
+save_video: False
+
+# path to model weights. Model should be a TranslationPolicy
+model: "???"
+
+# number of parallel envs to run to run evaluation
+n_envs: 4
+
+test_n: 512
+
+noise: None
+
+save_attn: False
+
+save_solved_trajectories: False
