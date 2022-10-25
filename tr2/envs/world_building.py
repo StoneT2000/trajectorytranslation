@@ -73,9 +73,7 @@ def add_target(
 ) -> sapien.Actor:
     builder = scene.create_actor_builder()
     half_length = 0.5
-    # builder.add_capsule_collision(
-    #     radius=radius, material=physical_material, half_length=half_length
-    # )
+
     if color is None:
         color = [0.2, 0.2, 1]
     builder.add_sphere_visual(

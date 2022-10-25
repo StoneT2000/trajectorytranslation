@@ -85,7 +85,7 @@ class BoxPusherEnv(SapienEnv):
         self.balls_meta = []
         self.target = None
         self.target_locs = target_locs
-        self.target_loc_generation_type = "corners"
+        self.target_loc_generation_type = "any"
         if self.target_locs == "any":
             self.target_locs = []
             self.target_loc_generation_type = "any"
@@ -192,7 +192,6 @@ class BoxPusherEnv(SapienEnv):
 
     def _add_actors(self):
         # add targets and boxes
-        # ball_mtl = self._scene.create_physical_material(1., 1., 0.0)
         ball_mtl = self._scene.create_physical_material(0., 0., 0.0)
         dx_range = (0, 0)
         dy_range = (0, 0)
@@ -321,12 +320,6 @@ class BoxPusherEnv(SapienEnv):
         else:
             self.ball_target = ball_target
             self.target = target
-        #     ball_target = self.np_random.choice(choices)
-        # if target is None:
-        #     target = self.np_random.randint(0, len(self.target_actors))
-
-        # color the other balls red
-        # ball_mtl = self._scene.create_physical_material(1., 1., 0.0)
         ball_mtl = self._scene.create_physical_material(0., 0., 0.0)
         for i in range(1, len(self.balls)):
 
@@ -453,16 +446,6 @@ class BoxPusherEnv(SapienEnv):
                     if not self.balls_meta[ball_id]["done"] and dist < self.ball_radius * 3:
                         if self.controlled_ball_attached is None:
                             self.controlled_ball_attached = ball_id
-            # if (
-            #     self._get_actor_type(c.actor0) == "obstacle"
-            #     and self._get_actor_type(c.actor1) == "agent"
-            # ) or (
-            #     self._get_actor_type(c.actor1) == "obstacle"
-            #     and self._get_actor_type(c.actor0) == "agent"
-            # ):
-            #     for p in c.points:
-            #         if np.linalg.norm(p.impulse) > 0:
-            #             self.failed = True
         
         finished_box = False
         if allow_finish and not self.failed:
@@ -476,7 +459,6 @@ class BoxPusherEnv(SapienEnv):
                     else:
                         max_dist = self.target_radius + self.ball_radius 
                     if dist < max_dist:
-                        # self._scene.remove_actor(self.balls[self.ball_target])
                         self.balls_meta[self.ball_target]["done"] = True
                         if self.controlled_ball_attached is not None:
                             self.controlled_ball_attached = None
@@ -562,10 +544,6 @@ class BoxPusherEnv(SapienEnv):
         positions = []
         mask = np.ones(len(self.balls))
         for i, (ball, ball_meta) in enumerate(zip(self.balls, self.balls_meta)):
-            # if ball_meta["done"]:
-                # mask[i] = 0
-                # positions.append(np.zeros(2))
-            # else:
             positions.append(ball.pose.p[:2])
         if self.obs_mode == "dict":
             obs = {
@@ -579,7 +557,6 @@ class BoxPusherEnv(SapienEnv):
             if self.task == 'obstacle':
                 obs["obstacles"] = np.array([x.pose.p[:2] for x in self.obstacle_actors])
             if self.magic_control:
-                # add annotation of when we contact to make generating trajectory easier
                 obs["controlled_ball_attached"] = self.controlled_ball_attached is not None
             return obs
         elif self.obs_mode == "dense":
@@ -589,7 +566,6 @@ class BoxPusherEnv(SapienEnv):
 
     def clear_out_board(self):
         for ball_id, ball in enumerate(self.balls):
-            # if not self.balls_meta[ball_id]["done"]:
             self._scene.remove_actor(ball)
         for target in self.target_actors:
             self._scene.remove_actor(target)
@@ -631,11 +607,8 @@ class BoxPusherEnv(SapienEnv):
         self.viewer = Viewer(self._renderer)
 
         self.viewer.set_scene(self._scene)
-        # self.viewer.set_camera_xyz(0, 0, 20)
-        # self.viewer.set_camera_rpy(-np.pi / 2, np.pi / 2, 0)  # birdeye
         self.viewer.set_camera_rpy(0, -np.pi/2, -np.pi/2)
         self.viewer.set_camera_xyz(0, 0, 1.5)
-        # self.viewer.window.set_camera_parameters(near=0.1, far=100, fovy=np.pi)
 
     def _generate_ball_positions(
         self, half_width=1, half_height=2, n=10, ball_radius=0.05

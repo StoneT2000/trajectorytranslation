@@ -85,8 +85,11 @@ class TrajectoryEnv(gym.Env):
             number of dimensions in teacher observations. default is None, value used will be same as student (state_dims)
         early_success : bool
             whether to return done=True if success is detected
-        if seed_by_dataset is true, then teacher trajectory is pulled from dataset using traj_ids 
-        if false, then traj_ids are just environment seeds
+
+        seed_by_dataset : bool
+            if seed_by_dataset is true, then abstract trajectory is pulled from dataset using traj_ids and resetting 
+                the environment resets to the initial state of one of the abstract trajectories
+            if false, then traj_ids are just environment seeds
 
         sub_goals : bool
             if True, then observation will additionally include a sub_goal via the next_sub_goal function. If False, then it is not provided
