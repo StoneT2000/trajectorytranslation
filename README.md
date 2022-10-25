@@ -100,11 +100,11 @@ Open sourced code is a work in progress, but here is a high level overview: We f
 
 The general codebase is organized as follows
 
-skilltranslation/envs - all envs
+tr2/envs - all envs
 
-skilltranslation/models - all models / policies
+tr2/models - all models / policies
 
-skilltranslation/scripts - various scripts to use and run
+tr2/scripts - various scripts to use and run
 
 
 ## Citation

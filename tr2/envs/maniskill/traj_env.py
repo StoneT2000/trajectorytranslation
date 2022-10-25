@@ -291,7 +291,7 @@ class OpenDrawerTrajectory(TrajectoryEnv):
         }
 gym.register(
     id="OpenDrawerTrajectory-v0",
-    entry_point="skilltranslation.envs.maniskill.traj_env:OpenDrawerTrajectory",
+    entry_point="tr2.envs.maniskill.traj_env:OpenDrawerTrajectory",
 )
 if __name__ == "__main__":
 

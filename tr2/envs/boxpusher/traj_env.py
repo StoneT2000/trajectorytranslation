@@ -377,5 +377,5 @@ class BoxPusherTrajectory(TrajectoryEnv):
         }
 gym.register(
     id="BoxPusherTrajectory-v0",
-    entry_point="skilltranslation.envs.boxpusher.traj_env:BoxPusherTrajectory",
+    entry_point="tr2.envs.boxpusher.traj_env:BoxPusherTrajectory",
 )

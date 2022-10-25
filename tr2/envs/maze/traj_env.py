@@ -222,7 +222,7 @@ class MazeTrajectory(TrajectoryEnv):
         pass
 gym.register(
     id="MazeTrajectory-v0",
-    entry_point="skilltranslation.envs.maze.traj_env:MazeTrajectory",
+    entry_point="tr2.envs.maze.traj_env:MazeTrajectory",
 )
 if __name__ == "__main__":
     env = MazeTrajectory(

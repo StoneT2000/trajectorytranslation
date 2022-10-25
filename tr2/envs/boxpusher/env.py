@@ -760,10 +760,10 @@ class BoxPusherEnv(SapienEnv):
 
 gym.register(
     id="BoxPusher-v0",
-    entry_point="skilltranslation.envs.boxpusher.env:BoxPusherEnv",
+    entry_point="tr2.envs.boxpusher.env:BoxPusherEnv",
 )
 gym.register(
     id="BoxPusherFinite-v0",
-    entry_point="skilltranslation.envs.boxpusher.env:BoxPusherEnv",
+    entry_point="tr2.envs.boxpusher.env:BoxPusherEnv",
     max_episode_steps=100,
 )

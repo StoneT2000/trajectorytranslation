@@ -73,7 +73,7 @@ class Variant(str, enum.Enum):
 # ======================================= #
 
 TASK_TO_EPOINT: Dict[Task, str] = {
-    Task.SWEEP_TO_TOP: "skilltranslation.envs.xmagical.env:SweepToTopEnv",
+    Task.SWEEP_TO_TOP: "tr2.envs.xmagical.env:SweepToTopEnv",
 }
 # Whether the task supports state-based observations.
 TASK_TO_STATE_AVAILABILITY: Dict[Task, bool] = {

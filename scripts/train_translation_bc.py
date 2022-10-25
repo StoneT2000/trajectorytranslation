@@ -53,7 +53,7 @@ def main(cfg):
         tensorboard=logging_cfg.tensorboard,
         workspace=logging_cfg.workspace,
         exp_name=logging_cfg.exp_name,
-        project_name="skilltranslation",
+        project_name="tr2",
         cfg=cfg,
         clear_out=new_session
     )

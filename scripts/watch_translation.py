@@ -16,7 +16,6 @@ from tr2.models.translation.translation_transformer import (
 from tr2.utils.animate import animate
 import os.path as osp
 import tr2.envs.boxpusher.traj_env
-# import skilltranslation.envs.maniskill.traj_env
 import tr2.envs.maze.traj_env
 
 def main(cfg):

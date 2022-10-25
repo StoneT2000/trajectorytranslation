@@ -176,7 +176,7 @@ class XMagicalTrajectory(TrajectoryEnv):
         return self.env.get_state()
 gym.register(
     id="XMagicalTrajectory-v0",
-    entry_point="skilltranslation.envs.xmagical.traj_env:XMagicalTrajectory",
+    entry_point="tr2.envs.xmagical.traj_env:XMagicalTrajectory",
 )
 if __name__ == "__main__":
     env = XMagicalTrajectory(trajectories_dataset="datasets/xmagical/dataset.pkl", trajectories=[1])

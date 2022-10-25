@@ -1,0 +1,17 @@
+env: "BoxPusherTrajectory-v0"
+device: "cuda"
+env_cfg:
+  task_agnostic: False
+  reward_type: "lcs_dense"
+  trajectories: "datasets/boxpusher/dataset_train_ids.npy"
+  trajectories_dataset: "datasets/boxpusher/dataset.pkl"
+  max_trajectory_skip_steps: 15
+  control_type: "2D-continuous"
+  exclude_target_state: True
+  fixed_max_ep_len: 200
+  env_rew_weight: 0.1
+  speed_factor: 0.5
+  early_success: True
+
+test_n: 128
+n_envs: 8
