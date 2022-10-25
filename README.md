@@ -35,7 +35,7 @@ Follow the subsequent sections for instructions on obtaining abstract trajectori
 
 ### Abstract Trajectory Generation / Dataset download links
 
-The dataset files can all be found at this google drive link:
+The dataset files can all be found at this google drive link: https://drive.google.com/file/d/1z38DTgzmTc2mfePYnP9qNDUfGgN80FYH/view?usp=sharing
 
 Download and unzip to a folder called `datasets` for the rest of the code to work.
 
@@ -85,6 +85,8 @@ For each environment, there is an associated config file for evalultaion and wat
 ### Reproducing Results
 
 For specific configurations for experiments to reproduce table 1 in our paper, see `experiments/cfgs/<exp_name>` [TODO]
+
+Already trained models and weights can be downloaded here: https://drive.google.com/file/d/1m3GwDAsPypxXQdGppVNJxsr19qWfdKLS/view?usp=sharing
 
 ## Code Organization
 
