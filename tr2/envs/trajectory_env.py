@@ -14,7 +14,7 @@ from tr2.planner.base import HighLevelPlanner
 
 class TrajectoryEnv(gym.Env):
     """
-    base class for any trajectory mimicking environment
+    base class for any abstract-trajectory following environment
     """
     def __init__(
         self,
