@@ -19,7 +19,7 @@ exp_cfg:
 
   accumulate_grads: False
   #ppo configs
-  epochs: 2000
+  epochs: 3000
   critic_warmup_epochs: 0
   update_iters: 3
   max_ep_len: 200

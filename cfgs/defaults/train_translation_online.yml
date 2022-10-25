@@ -37,8 +37,7 @@ exp_cfg:
   log_std_scale: -0.5
   pi_lr: 3e-4
   vf_lr: 3e-4
-  target_kl: 1e-2
-
+  gamma: 0.99
   accumulate_grads: False
 
   dapg: False

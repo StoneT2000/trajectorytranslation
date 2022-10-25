@@ -1,11 +1,8 @@
 env: "BoxPusherTrajectory-v0"
 save_video: False
-start_id: 1
-end_id: 20
-traj_id: -1
 env_cfg:
   task_agnostic: False
-  reward_type: "lcs_dense"
+  reward_type: "trajectory"
   # not used
   trajectories: [0]
   trajectories_dataset: "datasets/boxpusher/dataset.pkl"

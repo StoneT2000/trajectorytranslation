@@ -135,7 +135,7 @@ class BoxPusherTrajectory(TrajectoryEnv):
             target_xy = dense_obs[:2]
             agent_xy = dense_obs[2:4]
             ball_xy = dense_obs[4:6]
-        if self.reward_type == "lcs_dense":
+        if self.reward_type == "trajectory":
             reward = 0
             control_to_ball = np.linalg.norm(
                 agent_xy - ball_xy
@@ -170,8 +170,6 @@ class BoxPusherTrajectory(TrajectoryEnv):
         elif self.reward_type == "sparse":
             reward = -1
             return reward
-        elif self.reward_type == "test":
-            return -np.linalg.norm(agent_xy - np.array([0.5,-0.5])) / 10
 
 
     

@@ -1,0 +1,35 @@
+env: "BoxPusherTrajectory-v0"
+device: cuda
+env_cfg:
+  task_agnostic: False
+  early_success: True
+  reward_type: "trajectory"
+  trajectories: "datasets/boxpusher/dataset_train_ids.npy"
+  trajectories_dataset: "datasets/boxpusher/dataset.pkl"
+  max_trajectory_skip_steps: 15
+  control_type: "2D-continuous"
+  exclude_target_state: True
+  fixed_max_ep_len: 200
+  env_rew_weight: 0.1
+  speed_factor: 0.5
+  seed_by_dataset: False
+  re_center: False
+  planner_cfg:
+    planner: "v1"
+    planning_env: "v1"
+    render_plan: False
+    max_plan_length: 300
+    re_center: False
+    save_plan_videos: False
+    min_student_execute_length: 200
+    max_student_execute_length: 200
+    env_cfg:
+      magic_control: True
+      control_type: 2D
+      obs_mode: dict
+      disable_ball_removal: True
+      task: obstacle
+  task: obstacle
+
+test_n: 128
+n_envs: 16
