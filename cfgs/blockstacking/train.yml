@@ -22,7 +22,7 @@ exp_cfg:
   n_envs: 16
 
   gae_lambda: 0.95
-  target_kl: 0.2
+  target_kl: 0.15
   log_std_scale: -0.5
   pi_lr: 3e-4
   vf_lr: 3e-4
@@ -33,7 +33,7 @@ exp_cfg:
   critic_warmup_epochs: 0
   update_iters: 3
   steps_per_epoch: 20000
-  batch_size: 512
+  batch_size: 1024
   eval_freq: 50
   eval_save_video: True
   max_ep_len: 200
@@ -58,8 +58,8 @@ model_cfg:
   max_time_steps: 1024
   # below should also be merged into dataset_cfgs
   max_student_length: 300
-  max_teacher_length: 32
-  trajectory_sample_skip_steps: 6
+  max_teacher_length: 55
+  trajectory_sample_skip_steps: 1
   # equivalent to positional embeddings
   # timestep_embeddings: True
   timestep_embeddings: False
@@ -70,7 +70,7 @@ model_cfg:
 
   # translation model specific configs
   stack_size: 5
-  state_embedding_hidden_sizes: (128,)
+  state_embedding_hidden_sizes: (64,)
   state_embedding_activation: 'relu'
   final_mlp_hidden_sizes: (128, 128)
   final_mlp_activation: 'relu'

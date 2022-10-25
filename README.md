@@ -84,9 +84,17 @@ For each environment, there is an associated config file for evalultaion and wat
 
 ### Reproducing Results
 
-For specific configurations for experiments to reproduce table 1 in our paper, see `experiments/cfgs/<exp_name>` [TODO]
+For specific scripts to run experiments to reproduce table 1 in our paper, see `scripts/exos/<env_name>/*.sh`. These contain copy+pastable bash scripts to reproduce the individual results of each trial used to produce the mean values shown in table 1. 
+
 
 Already trained models and weights can be downloaded here: https://drive.google.com/file/d/1m3GwDAsPypxXQdGppVNJxsr19qWfdKLS/view?usp=sharing
+They are organized by `results/<env_name>/<model>`
+
+#### Reproducing Real World Experiments
+
+Open sourced code is a work in progress, but here is a high level overview: We first predict the pose of a block in the real world, placed it in simulation and ran our trained blockstacking TR2-GPT2 agent to generate a simulated trajectory. Using position control, we execute the simulated trajectory step by step. Then we place a new block into view and repeat the steps until done.
+
+<!-- To setup real world experiments, you need a depth camera (our code is configured for intel-real sense), and some calibration of the camera so that you get a transformation matrix from camera frame to robot base frame. -->
 
 ## Code Organization
 

@@ -12,7 +12,7 @@ datasets/
 *.egg
 
 results/
-
+test_results/
 videos/
 
 external/
@@ -24,6 +24,8 @@ skilltranslation/planner
 skilltranslation/envs
 scripts/realworld
 scripts/plan_translate.py
+# has bug to fix
+scripts/exps/blockstacking/eval_test_stack_pyramid.sh
 Dockerfile
 ManiskillDockerfile
 

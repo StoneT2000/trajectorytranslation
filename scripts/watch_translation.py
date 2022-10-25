@@ -70,7 +70,7 @@ def main(cfg):
     done = False
     
     env = gym.make(cfg.env, **env_cfg)
-    use_ac = True
+    use_ac = False
     if use_ac: 
         model = TranslationTeacherStudentActorCritic(
             actor_model=model_cls.load_from_checkpoint(ckpt, device=device), 
