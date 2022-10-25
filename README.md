@@ -7,7 +7,7 @@ This is the official codebase for the paper
 
 [Stone Tao](https://stoneztao.com/), [Xiaochen Li](https://sites.google.com/view/xiaochen-li), [Tongzhou Mu](https://cseweb.ucsd.edu//~t3mu/), [Zhiao Huang](https://sites.google.com/view/zhiao-huang), [Yuzhe Qin](https://yzqin.github.io/), [Hao Su](https://cseweb.ucsd.edu/~haosu/)
 
-
+For visualizations and videos see our project page: https://trajectorytranslation.github.io/
 [TODO, add graphic?]
 
 ## Installation
