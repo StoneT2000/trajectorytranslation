@@ -4,11 +4,11 @@ from pathlib import Path
 
 import numpy as np
 
-from tr2.envs.maze.env import MazeEnv
+from tr2.envs.couchmoving.env import CouchmovingEnv
 from tr2.utils.sampling import resample_teacher_trajectory
 
 
-def generate_teacher(env: MazeEnv, seed, teacher_seed, render=False, fragment=False,augmented=False, sparsity=1e-1, env_cfg=dict(
+def generate_teacher(env: CouchmovingEnv, seed, teacher_seed, render=False, fragment=False,augmented=False, sparsity=1e-1, env_cfg=dict(
 
 )):
     def extract_teacher_obs(obs):
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     fragment = False
     augmented = False
     sparsity = 1e-1
-    ds_path = "maze_iclr"
+    ds_path = "couchmoving"
     if "path" in cfg: ds_path = cfg.path
     if "sparsity" in cfg: sparsity = cfg.sparsity
     if "short" in cfg: short = cfg.short
@@ -88,7 +88,7 @@ if __name__ == "__main__":
         )
     env_cfg["max_walks"] = max_walks
     env_cfg["walk_dist_range"] = walk_dist_range
-    env = MazeEnv(agent_type="couch", offscreen_only=not render, random_init=fragment, target_next_chamber=True, **env_cfg)
+    env = CouchmovingEnv(agent_type="couch", offscreen_only=not render, random_init=fragment, target_next_chamber=True, **env_cfg)
     dataset = dict(teacher=dict())
     teacher_seed = 0
     from tqdm import tqdm

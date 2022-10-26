@@ -21,7 +21,7 @@ wandb
 
 # TODO uncomment once ready
 tr2/planner
-tr2/envs
+# tr2/envs
 scripts/realworld
 scripts/plan_translate.py
 # has bug to fix

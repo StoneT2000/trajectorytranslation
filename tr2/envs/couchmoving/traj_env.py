@@ -8,14 +8,14 @@ from gym import spaces
 from matplotlib import pyplot as plt
 
 from tr2.envs.boxpusher.env import BoxPusherEnv
-from tr2.envs.maze.building import add_walls
-from tr2.envs.maze.env import MazeEnv
+from tr2.envs.couchmoving.building import add_walls
+from tr2.envs.couchmoving.env import CouchmovingEnv
 from tr2.envs.trajectory_env import TrajectoryEnv
 from tr2.envs.world_building import (add_ball, add_target,
                                                   create_box)
 
 
-class MazeTrajectory(TrajectoryEnv):
+class CouchmovingTrajectory(TrajectoryEnv):
     def __init__(
         self,
         trajectories=[],
@@ -61,7 +61,7 @@ class MazeTrajectory(TrajectoryEnv):
         self.sub_goal_nstep = sub_goal_nstep
         self.env_rew_weight = env_rew_weight
         reward_type = "dense"
-        env = MazeEnv(obs_mode="dense", agent_type="couch",exclude_target_state=exclude_target_state,skip_map_gen=True, reward_type=reward_type, **kwargs)
+        env = CouchmovingEnv(obs_mode="dense", agent_type="couch",exclude_target_state=exclude_target_state,skip_map_gen=True, reward_type=reward_type, **kwargs)
         if trajectories_dataset is not None:
             if osp.splitext(trajectories_dataset)[1] == ".npy":
                 raw_dataset  = np.load(trajectories_dataset, allow_pickle=True).reshape(1)[0]
@@ -164,7 +164,7 @@ class MazeTrajectory(TrajectoryEnv):
     def reset_env(self, **kwargs):
         pass
     def reset_to_start_of_trajectory(self):
-        env: MazeEnv = self.env
+        env: CouchmovingEnv = self.env
         self.env.seed(self.trajectory["seed"])
         if "env_cfg" in self.trajectory:
             env.max_walks = self.trajectory["env_cfg"]["max_walks"]
@@ -221,50 +221,6 @@ class MazeTrajectory(TrajectoryEnv):
     def _plan_trajectory(self, start_state):
         pass
 gym.register(
-    id="MazeTrajectory-v0",
-    entry_point="tr2.envs.maze.traj_env:MazeTrajectory",
+    id="CouchmovingTrajectory-v0",
+    entry_point="tr2.envs.couchmoving.traj_env:CouchmovingTrajectory",
 )
-if __name__ == "__main__":
-    env = MazeTrajectory(
-        trajectories=[23],
-        trajectories_dataset="datasets/maze_v2/couch_6_corridorrange_12_30/dataset_teacher.pkl",
-        max_trajectory_length=800,
-        random_init=False,
-        start_from_chamber=True,
-        world_size=200
-    )
-    env.seed(5)
-    env.reset()
-    # env.reset()
-    env.draw_teacher_trajectory(skip=8)
-    # while True:
-    #     env.render()
-    viewer = env.viewer
-    viewer.paused=True
-    steps=0
-    while steps < 100000:
-        env.render()
-        action = np.zeros(3)
-        steps = steps + 1
-        if steps < 50000:
-            action[2] = 1
-        if env.viewer.window.key_down("o"):
-            # print("RESET",env.reset())
-            action[2] = -1
-            # env.set_state()
-        elif env.viewer.window.key_down("u"):
-            # print("RESET",env.reset())
-            action[2] = 1
-        elif env.viewer.window.key_down("i"):
-            action[1] = 1
-        elif viewer.window.key_down("k"):
-            action[1] = -1
-        elif viewer.window.key_down("j"):
-            action[0] = -1
-        elif viewer.window.key_down("l"):
-            action[0] = 1
-        else:
-            pass
-        action  *= 10
-        obs, reward, done, info = env.step(action=action)
-        print(reward)

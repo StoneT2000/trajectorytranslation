@@ -8,7 +8,7 @@ from regex import E
 from sapien.utils.viewer import Viewer
 from transforms3d.quaternions import axangle2quat, quat2axangle
 
-from tr2.envs.maze.building import add_walls
+from tr2.envs.couchmoving.building import add_walls
 from tr2.envs.sapien_env import SapienEnv
 from tr2.envs.world_building import add_ball, add_target
 
@@ -20,7 +20,7 @@ COLORS = {
 }
 
 
-class MazeEnv(SapienEnv):
+class CouchmovingEnv(SapienEnv):
     def __init__(
         self,
         target_radius=0.025,

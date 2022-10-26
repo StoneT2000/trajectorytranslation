@@ -16,7 +16,7 @@ from tr2.models.translation.translation_transformer import (
 from tr2.utils.animate import animate
 import os.path as osp
 import tr2.envs.boxpusher.traj_env
-import tr2.envs.maze.traj_env
+import tr2.envs.couchmoving.traj_env
 
 def main(cfg):
 
@@ -143,18 +143,12 @@ def main(cfg):
                         env.visualize_attn(attn_vec)
                     else:
                         a = model.step(obs)
-                    # a[0,0] = 0
                     if actions_scaler is not None:
                         a = actions_scaler.untransform(a)[0].cpu().numpy()
                     else:
                         a = a.cpu().numpy()[0]
-                    # print("ACTION", a)
                 else:
                     a = model.act(obs, deterministic=False)[0]
-                    # print("AC", a)
-                # if "Maze" in cfg.env:
-                #     a[:2] = 0.175*a[:2] / np.linalg.norm(a[:2])
-                #     a = a + noise_generator.normal(0, 2e-1, size=(3,))
             if traj_actions is not None:
                 if ep_len >= len(traj_actions):
                     a = np.zeros_like(traj_actions[0])
