@@ -82,8 +82,8 @@ if __name__ == "__main__":
             observations=new_obs,
             env_init_state=env_init_state
         )
-    Path("datasets/boxpusher_v2").mkdir(parents=True, exist_ok=True)
-    with open("datasets/boxpusher_v2/dataset.pkl", "wb") as f:
+    Path("datasets/boxpusher").mkdir(parents=True, exist_ok=True)
+    with open("datasets/boxpusher/dataset.pkl", "wb") as f:
         pickle.dump(dataset, f)
     ids =sorted(list(dataset["teacher"].keys()))
-    np.save("datasets/boxpusher_v2/dataset_train_ids.npy", ids)
+    np.save("datasets/boxpusher/dataset_train_ids.npy", ids)

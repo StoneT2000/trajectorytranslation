@@ -13,4 +13,4 @@ if sapien_v2:
     import tr2.envs.boxpusher.traj_env
     import tr2.envs.couchmoving.traj_env
 else:
-    import tr2.envs.maniskill.traj_env
+    import tr2.envs.opendrawer.traj_env

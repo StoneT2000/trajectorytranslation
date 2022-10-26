@@ -24,12 +24,13 @@ And then run
 pip install -e ./paper_rl/
 pip install -e . 
 pip install -e external/ManiSkill2 
-pip install -e external/ManiSkill # used only for the open drawer environment
 ```
 
-## Usage
+Due to compatability issues, to benchmark on opendrawer (which uses ManiSkill 1), see setup details [here]()
 
-Our approach relies on following abstract trajectories. Abstract trajectories are easily generated via heuristics that just move 3D points in space, describing a general plan of what should be achieved by a low-level agent (e.g. the robot arm). During RL training, these abstract trajectories are loaded up and given as part of the environment observation. 
+## Getting Started
+
+Our approach relies on following abstract trajectories. Abstract trajectories are easily generated via heuristics that just move 3D points in space, describing a general plan of what should be achieved by a low-level agent (e.g. the robot arm) without incorporating low-level details like physical manipulation. During RL training, these abstract trajectories are loaded up and given as part of the environment observation. 
 
 Follow the subsequent sections for instructions on obtaining abstract trajectories, training with them, and evaluating with them.
 
@@ -39,7 +40,7 @@ The dataset files can all be found at this google drive link: https://drive.goog
 
 Download and unzip to a folder called `datasets` for the rest of the code to work.
 
-To generate the abstract trajectories for each environment, follow TODO
+To generate the abstract trajectories for each environment, see the scripts in [scripts/abstract_trajectories/<env_name>]()
 
 ### Training
 
@@ -92,7 +93,7 @@ They are organized by `results/<env_name>/<model>`
 
 #### Reproducing Real World Experiments
 
-Open sourced code is a work in progress, but here is a high level overview: We first predict the pose of a block in the real world, placed it in simulation and ran our trained blockstacking TR2-GPT2 agent to generate a simulated trajectory. Using position control, we execute the simulated trajectory step by step. Then we place a new block into view and repeat the steps until done.
+Open sourced code for real world experiments is a work in progress, but here is a high level overview: We first predict the pose of a block in the real world, placed it in simulation and ran our trained blockstacking TR2-GPT2 agent to generate a simulated trajectory. Using position control, we execute the simulated trajectory step by step. Then we place a new block into view and repeat the steps until done.
 
 <!-- To setup real world experiments, you need a depth camera (our code is configured for intel-real sense), and some calibration of the camera so that you get a transformation matrix from camera frame to robot base frame. -->
 
@@ -102,7 +103,7 @@ The general codebase is organized as follows
 
 tr2/envs - all envs
 
-tr2/models - all models / policies
+tr2/models - all models
 
 tr2/scripts - various scripts to use and run
 

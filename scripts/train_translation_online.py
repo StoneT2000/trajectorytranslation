@@ -416,7 +416,7 @@ def main(cfg):
                 # or "farthest_traj_match_frac" in k
                 # or "closest_traj_match_frac" in k
                 or "lcs" in k
-                or "Success" in k
+                or "task_complete" in k
             ):
                 filtered[k] = latest_stats[k]
         if cfg.verbose == 1:
@@ -428,7 +428,7 @@ def main(cfg):
             "train/farthest_traj_match_frac_max",
             "train/RolloutTime",
             "train/UpdateTime",
-            "train/Success_avg",
+            "train/task_complete_avg",
         ]
         csv_data = {}
         for k in to_csv_keys:

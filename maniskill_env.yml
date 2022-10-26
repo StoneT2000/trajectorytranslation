@@ -1,4 +1,4 @@
-name: mani_skill
+name: tr2-ms1
 channels:
   - conda-forge
   - defaults
