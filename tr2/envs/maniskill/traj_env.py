@@ -66,13 +66,9 @@ class OpenDrawerTrajectory(TrajectoryEnv):
         self.max_coord_stray_dist = max_coord_stray_dist
         self.plan_id = 0
         self.partial_trajectories = partial_trajectories
-        reward_mode = "sparse"
         self.obs_mode = obs_mode
-        # env = gym.make(f"OpenCabinetDrawer_{1000}-v0")
         env = gym.make("OpenCabinetDrawer_CabinetSelection-v0", max_episode_steps=fixed_max_ep_len + 100, mode=mode)
         env.set_env_mode(obs_mode=obs_mode, reward_type='dense')
-        # env = ManiSkillActionWrapper(env)
-        # env = NormalizeActionWrapper(env)
         self.grasp_count = 0
         self.match_traj_count = 0
         self.match_traj_frac = 0
@@ -125,7 +121,7 @@ class OpenDrawerTrajectory(TrajectoryEnv):
     def format_ret(self, obs, ret):
         if self.reward_type == "original" or self.reward_type == "dense":
             return ret
-        elif self.reward_type == "lcs_dense":
+        elif self.reward_type == "trajectory":
             reward = 0
             reward += ret * self.env_rew_weight
             if self.improved_farthest_traj_step:
@@ -287,33 +283,8 @@ class OpenDrawerTrajectory(TrajectoryEnv):
                 observations = np.zeros((10, 9))
         return {
             "observations": np.array(observations),
-            # "env_init_state": start_state
         }
 gym.register(
     id="OpenDrawerTrajectory-v0",
     entry_point="tr2.envs.maniskill.traj_env:OpenDrawerTrajectory",
 )
-if __name__ == "__main__":
-
-    env=OpenDrawerTrajectory(trajectories=['1004-1'], trajectories_dataset="./datasets/maniskill_v3/dataset.pkl",
-                                     stack_size=5, max_trajectory_length=300, reward_type="lcs_dense")
-    # env=OpenDrawerTrajectory(trajectories=['1000-0'], trajectories_dataset="./datasets/maniskill_pcd/dataset.pkl",
-                                    # stack_size=5, max_trajectory_length=300, reward_type="lcs_dense",obs_mode='pointcloud')
-    env.seed(20)
-    obs=env.reset()
-    env.reset()
-    env.reset()
-    viewer = env.render()
-    viewer.paused=True
-    env.draw_teacher_trajectory(skip=0)
-    print(obs['observation'][-1][26+7:])
-    import time
-    stime=time.time_ns()
-    step = 0
-    while step < 1000:
-        step += 1
-        env.render()
-        o,r,d,info=env.step(env.action_space.sample()*0)
-        print('..', r, info)
-    etime=time.time_ns()
-    print(f"FPS {step/((etime-stime)*1e-6)}")

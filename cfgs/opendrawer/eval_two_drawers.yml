@@ -1,0 +1,33 @@
+env: "OpenDrawerTrajectory-v0"
+device: "cuda"
+env_cfg:
+  early_success: True
+  task_agnostic: False
+  reward_type: "trajectory"
+  trajectories: "datasets/opendrawer/dataset_opentwo_sim_ids.npy"
+  trajectories_dataset: "datasets/opendrawer/dataset_opentwo_sim.pkl"
+  max_trajectory_skip_steps: 15
+  fixed_max_ep_len: 2000
+  give_traj_id: False
+  max_trajectory_length: 1000
+  max_world_state_stray_dist: 0.1
+  max_coord_stray_dist: 0.1
+  robot_type: 'Arm'
+  controller: 'arm'
+  obs_mode: custom
+  max_plans: 3
+  mode: 2
+  seed_by_dataset: False
+  planner_cfg:
+    planner: "v1"
+    planning_env: "v1"
+    render_plan: False
+    max_plan_length: 3000
+    save_plan_videos: False
+    min_student_execute_length: 20
+    max_student_execute_length: 200
+    env_cfg:
+      magic_control: True
+
+test_n: 32
+n_envs: 4
