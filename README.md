@@ -15,7 +15,7 @@ For visualizations and videos see our project page: https://trajectorytranslatio
 To get started, install the repo with conda as so
 
 ```
-conda create -f environment.yml
+conda env create -f environment.yml
 conda activate tr2
 ```
 
@@ -26,7 +26,7 @@ pip install -e .
 pip install -e external/ManiSkill2 
 ```
 
-Due to compatability issues, to benchmark on opendrawer (which uses ManiSkill 1), see setup details [here]()
+Due to some compatability issues, we are still cleaning up the code and setup details to benchmark on opendrawer (which uses ManiSkill 1). Check back for updates or watch this repo.
 
 ## Getting Started
 
