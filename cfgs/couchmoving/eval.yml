@@ -1,0 +1,18 @@
+env: "CouchmovingTrajectory-v0"
+device: 'cuda'
+env_cfg:
+  early_success: True
+  task_agnostic: False
+  reward_type: "trajectory"
+  trajectories: "datasets/couchmoving/couch_4_corridorrange_12_20/dataset_train_ids_2400.npy"
+  trajectories_dataset: "datasets/couchmoving/couch_4_corridorrange_12_20/dataset_teacher.pkl"
+  max_trajectory_skip_steps: 15
+  offscreen_only: True
+  env_rew_weight: 0.5
+  exclude_target_state: True
+  fixed_max_ep_len: 150
+  target_next_chamber: True
+  sub_goals: False
+
+test_n: 128
+n_envs: 16

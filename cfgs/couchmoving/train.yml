@@ -4,7 +4,6 @@ env_cfg:
   early_success: False
   task_agnostic: False
   reward_type: "trajectory"
-  # path to file with trajectory ids
   trajectories: "datasets/couchmoving/couch_4_corridorrange_12_20/dataset_train_ids_2400.npy"
   trajectories_dataset: "datasets/couchmoving/couch_4_corridorrange_12_20/dataset_teacher.pkl"
   max_trajectory_skip_steps: 15
@@ -58,10 +57,11 @@ model_cfg:
   max_time_steps: 1024
   # below should also be merged into dataset_cfgs
   max_student_length: 300
-  max_teacher_length: 32
-  trajectory_sample_skip_steps: 6
+  max_teacher_length: 50
+  trajectory_sample_skip_steps: 3
   # equivalent to positional embeddings
   timestep_embeddings: False
+  teacher_timestep_embeddings: False
   
   # whether to include past student actions into the student stack frames fed into transformer
   use_past_actions: False

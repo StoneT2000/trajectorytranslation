@@ -96,7 +96,7 @@ class CouchmovingTrajectory(TrajectoryEnv):
         self.max_stray_dist = max_stray_dist
 
     def format_ret(self, obs, ret):
-        if self.reward_type == "lcs_dense":
+        if self.reward_type == "trajectory":
             reward = 0
             reward += ret * self.env_rew_weight
             if self.improved_farthest_traj_step:
