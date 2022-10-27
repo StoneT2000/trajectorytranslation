@@ -4,7 +4,6 @@ import gym
 import numpy as np
 import sapien.core as sapien
 from gym import spaces
-from regex import E
 from sapien.utils.viewer import Viewer
 from transforms3d.quaternions import axangle2quat, quat2axangle
 
