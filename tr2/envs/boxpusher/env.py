@@ -29,7 +29,6 @@ class BoxPusherEnv(SapienEnv):
         obs_mode="dict",
         reward_type="sparse",
         fixed_env=False,
-        target_plans=None,  # order of which balls and targets to move around to
         target_locs="any",  # locations of potential targets
         disable_ball_removal=False,
         task='train',
@@ -45,7 +44,7 @@ class BoxPusherEnv(SapienEnv):
             pushed to target
         obs_mode : str
             if 'dict', obs space is a nice formatted dictionary
-            if 'dense', obs space is a dense matrix of values
+            if 'dense', obs space is a dense vector of values
         reward_type : str
             if 'dense', give crafted dense reward
             if 'sparse', give success signal reward = number of balls that reached targets so far
@@ -91,9 +90,6 @@ class BoxPusherEnv(SapienEnv):
             self.target_loc_generation_type = "any"
 
         self.set_env_mode(obs_mode, control_type, reward_type)
-
-        self.target_plans = []
-        self.fixed_target_plans = target_plans
 
         super().__init__(control_freq=1, timestep=1e-2, **kwargs)
         self._build_world()
@@ -167,11 +163,8 @@ class BoxPusherEnv(SapienEnv):
             raise ValueError(f"{control_type} is not supported")
 
     def _generate_target_plans(self):
-        # generate target_plans if it doesn't exist
+        # generates the order in which the balls should be pushed
         self.target_plans = []
-        if self.fixed_target_plans is not None:
-            self.target_plans = self.fixed_target_plans
-            return
         ball_ids = []
         target_ids = []
         for i in range(self.num_balls):
@@ -591,7 +584,7 @@ class BoxPusherEnv(SapienEnv):
             elif self.task == 'silo_obstacle_push' or self.task == 'silo_obstacle_push_demo':
                 scale = 0.05 / 0.02
                 self.target_locs = np.array([[0, 0.25]]) * scale + self.np_random.rand(1, 2) * 0.2 * scale - 0.1 * scale # from the paper directly, scaled up to our map size.
-                # possible bug in paper? But force position of goal to be past obstacles and not inside it
+                # possible bug in SILO paper? But force position of goal to be past obstacles and not inside it
                 self.target_locs[0][1] = np.max([self.target_locs[0][1], 0.6])
         self._add_actors()
         self._scene.step()

@@ -492,8 +492,6 @@ class TrajectoryEnv(gym.Env):
         self.trajectory_time_steps = np.zeros((self.max_trajectory_length), dtype=int)
         self.trajectory_time_steps[self.max_trajectory_length - self.traj_len:] = np.arange(0, self.traj_len, dtype=int)
 
-        self.allow_finish = False
-
         self.max_ep_len = int(self.orig_traj_len * self.max_ep_len_factor)
         if self.fixed_max_ep_len is not None:
             self.max_ep_len = self.fixed_max_ep_len

@@ -131,7 +131,7 @@ class OpenDrawerTrajectory(TrajectoryEnv):
                 reward += (10 + 50*prog_frac) * (1 - np.tanh(dist_to_next*30))
             else:
                 if self.farthest_traj_step < len(self.teacher_student_coord_diff) - 1:
-                    reward -= 0 # add step wise penalty if agent hasn't reached the end yet
+                    pass
                 else:
                     dist_to_next = self.weighted_traj_diffs[-1]
                     reward += 10 * (1- np.tanh(dist_to_next*30)) # add big reward if agent did reach end and encourage agent to stay close to end

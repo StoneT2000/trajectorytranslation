@@ -106,7 +106,8 @@ class CouchmovingTrajectory(TrajectoryEnv):
                 reward += (10 + 50*prog_frac) * (1 - np.tanh(dist_to_next*30))
             else:
                 if self.farthest_traj_step < len(self.teacher_student_coord_diff) - 4:
-                    reward -= 0 # add step wise penalty if agent hasn't reached the end yet
+                    # checks len(...) - 4 due to bug of the environment where agent can actually never match the last state due to morphology.
+                    pass
                 else:
                     dist_to_next = self.weighted_traj_diffs[-1]
                     reward += 10 * (1- np.tanh(dist_to_next*30)) # add big reward if agent did reach end and encourage agent to stay close to end

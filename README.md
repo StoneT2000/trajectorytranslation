@@ -38,7 +38,7 @@ The dataset files can all be found at this google drive link: https://drive.goog
 
 Download and unzip to a folder called `datasets` for the rest of the code to work.
 
-To generate the abstract trajectories for each environment, see the scripts in [scripts/abstract_trajectories/<env_name>]()
+To generate the abstract trajectories for each environment, see the scripts in [scripts/abstract_trajectories/<env_name>](https://github.com/StoneT2000/trajectorytranslation/tree/main/scripts/abstract_trajectories)
 
 ### Training
 
@@ -99,7 +99,7 @@ Open sourced code for real world experiments is a work in progress, but here is 
 
 ### Creating Your Own Environments
 
-To create your own environment and leverage the abstract trajectory following paradigm, see [this page]. Tldr; you can subclass of the TrajectoryEnv class which lets you load abstract trajectories, stack observations, skip sampling, and more.
+This part is still WIP. However in general, you can subclass of the TrajectoryEnv class which lets you load abstract trajectories, stack observations, skip sampling, and more. See existing environments, (BoxPusher is a simple generally cleaner example) of how to do this.
 
 
 ## Citation

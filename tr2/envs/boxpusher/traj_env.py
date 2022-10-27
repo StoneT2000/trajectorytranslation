@@ -23,7 +23,6 @@ class BoxPusherTrajectory(TrajectoryEnv):
         max_trajectory_skip_steps=15,
         dense_obs_only=False,
         max_stray_dist=3e-1,
-        give_traj_id=False,
         exclude_target_state=False,
         reward_type="trajectory",
         task_agnostic=True,
@@ -89,7 +88,6 @@ class BoxPusherTrajectory(TrajectoryEnv):
             stack_size=stack_size,
             fixed_max_ep_len=fixed_max_ep_len,
             max_trajectory_skip_steps=max_trajectory_skip_steps,
-            give_traj_id=give_traj_id,
             trajectory_sample_skip_steps=trajectory_sample_skip_steps,
             task_agnostic=task_agnostic,
             randomize_trajectories=randomize_trajectories,
@@ -106,9 +104,6 @@ class BoxPusherTrajectory(TrajectoryEnv):
             size = 7
             if self.exclude_target_state:
                 size = 5
-            if self.give_traj_id:
-                # hack to test one hot encoding
-                size += 4
             self.observation_space = spaces.Box(
                 low=-np.inf,
                 high=np.inf,
@@ -141,9 +136,7 @@ class BoxPusherTrajectory(TrajectoryEnv):
                 agent_xy - ball_xy
             )
             ball_to_target = np.linalg.norm(self.target_loc - ball_xy)
-            ret = -control_to_ball*1*0.1 - ball_to_target*1*0.9 # about -0.6 at start usually
-            # if ball_to_target < self.env.target_radius + self.env.ball_radius:
-            #     ret += 1 # task complete signal
+            ret = -control_to_ball*1*0.1 - ball_to_target*1*0.9
             reward += ret * self.env_rew_weight
             if self.improved_farthest_traj_step:
                 look_ahead_idx = int(min(self.farthest_traj_step, len(self.weighted_traj_diffs) - 1))
@@ -152,7 +145,7 @@ class BoxPusherTrajectory(TrajectoryEnv):
                 reward += (10 + 50*prog_frac) * (1 - np.tanh(dist_to_next*10))
             else:
                 if self.farthest_traj_step < len(self.weighted_traj_diffs) - 1:
-                    reward -= 0 # add step wise penalty if agent hasn't reached the end yet
+                    pass
                 else:
                     dist_to_next = self.weighted_traj_diffs[-1]
                     reward += 5 * (1- np.tanh(dist_to_next*10)) # add big reward if agent did reach end
@@ -189,10 +182,6 @@ class BoxPusherTrajectory(TrajectoryEnv):
         # distances from world state (just one ball atm) to the intended trajectory
         self.teacher_student_world_diff = np.linalg.norm(
             teacher_world - ball_xy, axis=1
-        )
-
-        control_to_ball = np.linalg.norm(
-            agent_xy - ball_xy
         )
 
         agent_within_dist = self.teacher_student_agent_diff < 0.4
