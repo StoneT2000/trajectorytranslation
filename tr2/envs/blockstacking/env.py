@@ -406,7 +406,7 @@ class BlockStackPandaEnv(PandaEnv):
                     self.TEST_BLOCK_SPAWN_LOCATIONS.append(
                         test_configs.pyramid_configs[self.goal_height]['generate_spawn_location'](self._episode_rng)
                     )
-                gap_dist = self.block_half_size*1.4*5.0/4
+                gap_dist = self.block_half_size*0.45
                 for i in range(self.goal_height):
                     for j in range(self.goal_height-i):
                         n = self.goal_height-i
