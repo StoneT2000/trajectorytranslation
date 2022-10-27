@@ -1,0 +1,20 @@
+env: "BoxPusherTrajectory-v0"
+device: cuda
+save_video: False
+env_cfg:
+  early_success: True
+  task_agnostic: False
+  reward_type: "trajectory"
+  trajectories: "datasets/silo_obstacle_push/dataset_test_ids.npy"
+  trajectories_dataset: "datasets/silo_obstacle_push/dataset.pkl"
+  max_trajectory_skip_steps: 15
+  control_type: "2D-continuous"
+  fixed_max_ep_len: 50
+  exclude_target_state: True
+  seed_by_dataset: True
+  env_rew_weight: 0.1
+  speed_factor: 1
+  task: 'silo_obstacle_push'
+  
+test_n: 128
+n_envs: 16
