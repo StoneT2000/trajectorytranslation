@@ -6,9 +6,7 @@ This is the official codebase for the paper
 
 [Stone Tao](https://stoneztao.com/), [Xiaochen Li](https://sites.google.com/view/xiaochen-li), [Tongzhou Mu](https://cseweb.ucsd.edu//~t3mu/), [Zhiao Huang](https://sites.google.com/view/zhiao-huang), [Yuzhe Qin](https://yzqin.github.io/), [Hao Su](https://cseweb.ucsd.edu/~haosu/)
 
-For visualizations and videos see our project page: https://trajectorytranslation.github.io/
-
-All core components and major results have been open-sourced.
+For visualizations and videos see our project page: https://trajectorytranslation.github.io/. For full details, check out our paper: https://arxiv.org/abs/2210.07658
 
 ## Installation
 
@@ -30,7 +28,7 @@ Due to some compatability/dependency issues, we are still cleaning up the setup 
 
 ## Getting Started
 
-Our approach relies on following abstract trajectories. Abstract trajectories are easily generated via heuristics that just move 3D points in space, describing a general plan of what should be achieved by a low-level agent (e.g. the robot arm) without incorporating low-level details like physical manipulation. During RL training, these abstract trajectories are loaded up and given as part of the environment observation. 
+Our approach relies on following abstract trajectories. Abstract trajectories are easily generated via heuristics that just move 3D points representing objects in space, describing a general plan of what should be achieved by a low-level agent (e.g. the robot arm) without incorporating low-level details like physical manipulation. During RL training, these abstract trajectories are loaded up and given as part of the environment observation. 
 
 Follow the subsequent sections for instructions on obtaining abstract trajectories, training with them, and evaluating with them.
 
@@ -85,7 +83,6 @@ For each environment, there is an associated config file for evaluation and watc
 
 For specific scripts to run experiments to reproduce table 1 in our paper, see `scripts/exps/<env_name>/*.sh`. These contain copy+pastable bash scripts to reproduce the individual results of each trial used to produce the mean values shown in table 1, including training and evaluation.
 
-
 Already trained models and weights can be downloaded here: https://drive.google.com/file/d/1m3GwDAsPypxXQdGppVNJxsr19qWfdKLS/view?usp=sharing
 They are organized by `results/<env_name>/<model>`
 
@@ -93,13 +90,13 @@ We are still busy cleaning and organizing results for other non-core environment
 
 #### Reproducing Real World Experiments
 
-Open sourced code for real world experiments is a work in progress, but here is a high level overview: We first predict the pose of a block in the real world, placed it in simulation and ran our trained blockstacking TR2-GPT2 agent to generate a simulated trajectory. Using position control, we execute the simulated trajectory step by step. Then we place a new block into view and repeat the steps until done.
+Open sourced code for real world experiments is a work in progress, but here is a high level overview: We first predict the pose of a block in the real world, placed it in simulation and ran our trained blockstacking TR2-GPT2 agent to generate a simulated trajectory. Using position control, we execute the simulated trajectory step by step on the real robot arm. Then we place a new block into view and repeat the steps until done.
 
 <!-- To setup real world experiments, you need a depth camera (our code is configured for intel-real sense), and some calibration of the camera so that you get a transformation matrix from camera frame to robot base frame. -->
 
 ### Creating Your Own Environments
 
-This part is still WIP. However in general, you can subclass of the TrajectoryEnv class which lets you load abstract trajectories, stack observations, skip sampling, and more. See existing environments, (BoxPusher is a simple generally cleaner example) of how to do this.
+This part is still WIP as we're cleaning out the old research and experimental code to make extending the environmentes easier. However in general, you can subclass of the [TrajectoryEnv](https://github.com/StoneT2000/trajectorytranslation/blob/main/tr2/envs/trajectory_env.py) class which lets you load abstract trajectories, stack observations, skip sampling, and more. See existing environments, (BoxPusher is a simple generally cleaner example) of how to do this.
 
 
 ## Citation
