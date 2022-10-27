@@ -196,7 +196,6 @@ class CouchmovingEnv(SapienEnv):
         b = add_target(
                 self._scene,
                 target_id=len(self.visuals) + 10,
-                physical_material=ball_mtl,
                 radius=self.point_agent_radius * world_size_scale,
                 color=color,
                 pose=sapien.Pose([x, y, 0])
@@ -359,7 +358,6 @@ class CouchmovingEnv(SapienEnv):
                 [target_xy[0], target_xy[1], 0], q=axangle2quat([0, 1, 0], np.deg2rad(90))
             ),
             radius=1/self.world_size,
-            physical_material=ball_mtl,
             target_id=1,
             color=COLORS["BLUE_DARK"],
         )

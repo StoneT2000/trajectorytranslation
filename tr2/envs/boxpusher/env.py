@@ -204,7 +204,6 @@ class BoxPusherEnv(SapienEnv):
                     [target[0], target[1], 0.05], q=axangle2quat([0, 1, 0], np.deg2rad(90))
                 ),
                 radius=self.target_radius,
-                physical_material=ball_mtl,
                 target_id=target_id,
                 color=COLORS["BLUE"],
             )
@@ -361,7 +360,6 @@ class BoxPusherEnv(SapienEnv):
                 self.target_actors[i] = add_target(
                     self._scene,
                     old_pose,
-                    physical_material=ball_mtl,
                     target_id=i,
                     radius=self.target_radius,
                     color=COLORS["BLUE_DARK"],
@@ -373,7 +371,6 @@ class BoxPusherEnv(SapienEnv):
                 self.target_actors[i] = add_target(
                     self._scene,
                     old_pose,
-                    physical_material=ball_mtl,
                     target_id=i,
                     radius=self.target_radius,
                     color=COLORS["BLUE"],

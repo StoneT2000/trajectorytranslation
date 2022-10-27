@@ -4,11 +4,9 @@ This is the official codebase for the paper
 
 [Abstract-to-Executable Trajectory Translation for One Shot Task Generalization](https://arxiv.org/abs/2210.07658) by
 
-
 [Stone Tao](https://stoneztao.com/), [Xiaochen Li](https://sites.google.com/view/xiaochen-li), [Tongzhou Mu](https://cseweb.ucsd.edu//~t3mu/), [Zhiao Huang](https://sites.google.com/view/zhiao-huang), [Yuzhe Qin](https://yzqin.github.io/), [Hao Su](https://cseweb.ucsd.edu/~haosu/)
 
 For visualizations and videos see our project page: https://trajectorytranslation.github.io/
-[TODO, add graphic?]
 
 ## Installation
 
@@ -78,18 +76,20 @@ To simply watch the trained model, specify the configuration file, the model wei
 
 ```
 python scripts/watch_translation.py \
-    cfg=watch_cfg.yml model=results/test_exp/models/best_train_EpRet.pt
+    cfg=watch_cfg.yml model=results/test_exp/models/best_train_EpRet.pt traj_id=2
 ```
 
-For each environment, there is an associated config file for evalultaion and watching. These are stored at `cfgs/<env_name>/<eval_cfg|watch_cfg>.yml`
+For each environment, there is an associated config file for evaluation and watching. These are stored at `cfgs/<env_name>/<eval|watch>.yml`
 
 ### Reproducing Results
 
-For specific scripts to run experiments to reproduce table 1 in our paper, see `scripts/exos/<env_name>/*.sh`. These contain copy+pastable bash scripts to reproduce the individual results of each trial used to produce the mean values shown in table 1. 
+For specific scripts to run experiments to reproduce table 1 in our paper, see `scripts/exps/<env_name>/*.sh`. These contain copy+pastable bash scripts to reproduce the individual results of each trial used to produce the mean values shown in table 1. 
 
 
 Already trained models and weights can be downloaded here: https://drive.google.com/file/d/1m3GwDAsPypxXQdGppVNJxsr19qWfdKLS/view?usp=sharing
 They are organized by `results/<env_name>/<model>`
+
+We are still busy cleaning and organizing results for other non-core environments that were tested on.
 
 #### Reproducing Real World Experiments
 
