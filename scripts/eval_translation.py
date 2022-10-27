@@ -49,7 +49,6 @@ def main(cfg):
     device = torch.device(cfg.device)
     model.eval()
 
-    # TODO accept other formats probably
     ids = list(np.load(cfg.env_cfg.trajectories))[:]
     np.random.seed(0)
     id_rng = np.random.default_rng(1)

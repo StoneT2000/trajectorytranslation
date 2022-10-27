@@ -24,9 +24,6 @@ class BlockStackPlanner(HighLevelPlanner):
         # self.block_diff_threshold = block_diff_threshold
 
     def need_replan(self, curr_state, student_obs, teacher_trajectory, env):
-        ## why last obs? somewhere appended into student_obs?
-        ## assuming curr_state is dense obs above?
-        # return True
         if isinstance(curr_state, dict):
             # from traj env? so dict?
             # import pdb;pdb.set_trace()

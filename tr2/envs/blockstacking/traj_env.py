@@ -120,7 +120,6 @@ class BlockStackTrajectory(TrajectoryEnv):
                 intervene_count=intervene_count,
                 spawn_all_blocks=spawn_all_blocks,
                 real_pose_est=real_pose_est,
-                # TODO add task_range
             )
         env = ManiSkillActionWrapper(env)
         env = NormalizeActionWrapper(env)

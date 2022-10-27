@@ -45,7 +45,6 @@ def add_pole(
     pose: sapien.Pose,
     radius=0.05,
     color=None,
-    # density=1000.0,
     physical_material: sapien.PhysicalMaterial = None,
     pole_id=0,
 ) -> sapien.Actor:
@@ -67,8 +66,6 @@ def add_target(
     pose: sapien.Pose,
     radius=0.05,
     color=None,
-    # density=1000.0,
-    physical_material: sapien.PhysicalMaterial = None,
     target_id=0,
 ) -> sapien.Actor:
     builder = scene.create_actor_builder()

@@ -196,6 +196,7 @@ def view_pcd_bboxes(pcds, rgbs,zoom=0.12, poses=[], template_size=0.0235):
                                   lookat=[0.45,.05,.15],
                                   up=[0,.0,1])
 
+### BELOW IS WIP code, currently being changed to be a bit more configurable as it hardcodes the calibrated transformation matrix
 def estimate_single_block_pose_realsense():
     from importlib import reload
 

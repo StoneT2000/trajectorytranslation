@@ -97,17 +97,20 @@ Open sourced code for real world experiments is a work in progress, but here is 
 
 <!-- To setup real world experiments, you need a depth camera (our code is configured for intel-real sense), and some calibration of the camera so that you get a transformation matrix from camera frame to robot base frame. -->
 
-## Code Organization
+### Creating Your Own Environments
 
-The general codebase is organized as follows
-
-tr2/envs - all envs
-
-tr2/models - all models
-
-tr2/scripts - various scripts to use and run
+To create your own environment and leverage the abstract trajectory following paradigm, see [this page]. Tldr; you can subclass of the TrajectoryEnv class which lets you load abstract trajectories, stack observations, skip sampling, and more.
 
 
 ## Citation
 
-To cite our work, you can use the following bibtex [TODO]
+To cite our work, you can use the following bibtex
+
+```
+@article{tao2022tr2,
+  title     = {Abstract-to-Executable Trajectory Translation for One-Shot Task Generalization}, 
+  author    = {Tao, Stone and Li, Xiaochen and Mu, Tongzhou and Huang, Zhiao and Qin, Yuzhe and Su, Hao},
+  journal   = {arXiv},
+  year      = {2022},
+}
+```
