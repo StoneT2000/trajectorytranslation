@@ -8,6 +8,8 @@ This is the official codebase for the paper
 
 For visualizations and videos see our project page: https://trajectorytranslation.github.io/
 
+All core components and major results have been open-sourced.
+
 ## Installation
 
 To get started, install the repo with conda as so
@@ -24,7 +26,7 @@ pip install -e .
 pip install -e external/ManiSkill2 
 ```
 
-Due to some compatability issues, we are still cleaning up the code and setup details to benchmark on opendrawer (which uses ManiSkill 1). Check back for updates or watch this repo.
+Due to some compatability/dependency issues, we are still cleaning up the setup details to install opendrawer (which uses ManiSkill 1). For now you can try the above and then update the conda environment with the ManiSkill 1 dependencies. Check back for updates or watch this repo.
 
 ## Getting Started
 
@@ -46,8 +48,7 @@ To train with online RL, specify a base configuration yml file, specify the expe
 
 ```
 python scripts/train_translation_online.py \
-    cfg=train_cfg.yml restart_training=True logging_cfg.exp_name=test_exp \
-    env_cfg.trajectories="datasets/blockstacking/dataset_train_ids.npy" env_cfg.trajectories_dataset="datasets/blockstacking/dataset.pkl"
+    cfg=train_cfg.yml restart_training=True logging_cfg.exp_name=test_exp exp_cfg.epochs=2000
 ```
 
 Results including saved model checkpoints and evalution vidoes are stored in a `results` folder. Note that `results/<exp_name>/models/best_train_EpRet.pt` will be the model with the best training return.
@@ -56,8 +57,7 @@ In order to achieve greater precision and success rate, you can run the "finetun
 
 ```
 python scripts/train_translation_online.py \
-    cfg=train_cfg.yml restart_training=True logging_cfg.exp_name=test_exp_finetune \
-    env_cfg.trajectories="datasets/blockstacking/dataset_train_ids.npy" env_cfg.trajectories_dataset="datasets/blockstacking/dataset.pkl" \
+    cfg=train_cfg.yml restart_training=True logging_cfg.exp_name=test_exp_finetune exp_cfg.epochs=2000 \
     pretrained_ac_weights=results/test_exp/models/best_train_EpRet.pt exp_cfg.accumulate_grads=True
 ```
 
@@ -83,7 +83,7 @@ For each environment, there is an associated config file for evaluation and watc
 
 ### Reproducing Results
 
-For specific scripts to run experiments to reproduce table 1 in our paper, see `scripts/exps/<env_name>/*.sh`. These contain copy+pastable bash scripts to reproduce the individual results of each trial used to produce the mean values shown in table 1. 
+For specific scripts to run experiments to reproduce table 1 in our paper, see `scripts/exps/<env_name>/*.sh`. These contain copy+pastable bash scripts to reproduce the individual results of each trial used to produce the mean values shown in table 1, including training and evaluation.
 
 
 Already trained models and weights can be downloaded here: https://drive.google.com/file/d/1m3GwDAsPypxXQdGppVNJxsr19qWfdKLS/view?usp=sharing
