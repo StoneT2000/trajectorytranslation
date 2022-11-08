@@ -223,7 +223,6 @@ class BoxPusherTrajectory(TrajectoryEnv):
     def get_trajectory(self, t_idx):
         trajectory = self.raw_dataset["teacher"][str(t_idx)]
 
-        trajectory["observations"] #= trajectory["observations"][:-1]
         trajectory["observations"][-1][2:] = trajectory["env_init_state"][:2]
         # add fix by replacing last frame with the true goal location as planner doesn't go to the exact spot all the time.
         return trajectory
@@ -238,10 +237,6 @@ class BoxPusherTrajectory(TrajectoryEnv):
     def reset_to_start_of_trajectory(self):
         self.env._set_state(self.trajectory["env_init_state"])
     def render_goal(self, g1, g2):
-        # for HAC code
-        # if self.goal_balls_idx == 0:
-            # for ball in self.goal_balls:
-            #     self.env._scene.remove_actor(ball)
         for i, o in enumerate([g1]):
             frac = 1
             i = self.goal_balls_idx + i

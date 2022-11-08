@@ -94,6 +94,7 @@ class BoxPusherEnv(SapienEnv):
         super().__init__(control_freq=1, timestep=1e-2, **kwargs)
         self._build_world()
 
+        # visualization related.
         self._shadow_id = 0
         self._shadow_opacity = 0.8
 

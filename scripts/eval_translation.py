@@ -8,22 +8,17 @@ from omegaconf import OmegaConf
 import pandas as pd
 
 from tr2.models.translation.lstm import LSTM
-from tr2.models.translation.mlp_id import MLPTranslationID, MLPTranslationIDTeacherStudentActorCritic
+from tr2.models.translation.mlp_id import MLPTranslationID
 import torch
 from tr2.models.translation.translation_transformer import (
-    TranslationTeacherStudentActorCritic,
     TranslationTransformerGPT2,
 )
 from tr2.models.translation.convnet import TranslationConvNet
 
 from tr2.utils.animate import animate
 import os.path as osp
-from stable_baselines3.common.vec_env import SubprocVecEnv, VecVideoRecorder
-from tqdm import tqdm
+from stable_baselines3.common.vec_env import SubprocVecEnv
 import numpy as np
-from multiprocessing import Pool
-from tr2.data.teacherstudent import TeacherStudentDataset
-from tr2.data.utils import MinMaxScaler
 from paper_rl.common.rollout import Rollout
 from paper_rl.cfg import parse
 
@@ -102,6 +97,8 @@ def main(cfg):
             import tr2.envs
             env_kwargs = OmegaConf.to_container(env_cfg)
             env_kwargs["trajectories"] = ids[idx * ids_per_env: (idx + 1) * ids_per_env]
+
+            # Note that we create "planning environments" but these are used just for visualization purposes and are not actually necessary
             if "planner_cfg" in env_kwargs and env_kwargs["planner_cfg"] is not None:
                 if "BoxPusherTrajectory" in cfg.env:
                     from tr2.envs.boxpusher.env import BoxPusherEnv
@@ -127,7 +124,6 @@ def main(cfg):
                     from tr2.planner.opendrawerplanner import OpenDrawerPlanner
                     from mani_skill.env.open_cabinet_door_drawer import OpenCabinetDrawerMagicEnv_CabinetSelection
                     planner = OpenDrawerPlanner(replan_threshold=1e-2)
-                    # we only need planning env to get details about the object used
                     planning_env = OpenCabinetDrawerMagicEnv_CabinetSelection()
                     planning_env.set_env_mode(obs_mode=env_cfg.obs_mode, reward_type='sparse')
                     planning_env.reset()
@@ -139,28 +135,15 @@ def main(cfg):
         return _init
 
     env = SubprocVecEnv([make_env(i) for i in range(cfg.n_envs)])
-    # env = VecVideoRecorder(env, "videos", record_video_trigger=lambda x: True if x % 50 == 0 else False, video_length=50)
-    use_ac = False
-    if use_ac: 
-        model = TranslationTeacherStudentActorCritic(
-            actor_model=model_cls.load_from_checkpoint(ckpt, device=device), 
-            critic_model=model_cls.load_from_checkpoint(ckpt, device=device), action_space=env.action_space,
-        )
-        model.load_state_dict(ckpt["ac_state_dict"])
-        print("### LOGSTD", model.pi.log_std)
-        model=model.to(device)
-        model.eval()
+
     def policy(o):
         with torch.no_grad():
             o = obs_to_tensor(o)
             if not use_teacher:
                 o["teacher_attn_mask"][:] = False
                 o["teacher_frames"] = o["teacher_frames"] * 0
-            if not use_ac:
-                a = model.step(o)
-                a = model.actions_scaler.untransform(a).cpu().numpy()
-            else:
-                a = model.act(o, deterministic=False)
+            a = model.step(o)
+            a = model.actions_scaler.untransform(a).cpu().numpy()
         return a
     render_mode = False
     if save_video:
