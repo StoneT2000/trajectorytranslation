@@ -83,8 +83,7 @@ For each environment, there is an associated config file for evaluation and watc
 
 For specific scripts to run experiments to reproduce table 1 in our paper, see `scripts/exps/<env_name>/*.sh`. These contain copy+pastable bash scripts to reproduce the individual results of each trial used to produce the mean values shown in table 1, including training and evaluation.
 
-Already trained models and weights can be downloaded here: https://drive.google.com/file/d/15mTVSWTdX805EO1XGNBG20BE80BKBkah/view?usp=sharing
-They are organized by `results/<env_name>/<model>`
+Already trained models and weights can be downloaded here: https://drive.google.com/file/d/15mTVSWTdX805EO1XGNBG20BE80BKBkah/view?usp=sharing. They are organized by `results/<env_name>/<model>`
 
 We are still busy cleaning and organizing results for other non-core environments that were tested on as well as one of the ablation studies, stay tuned for updates by watching this repository.
 
