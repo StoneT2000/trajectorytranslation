@@ -1,0 +1,30 @@
+agent_class: "MobilePlatform"
+name: "mobile_platform_gimbal"
+urdf_file: "mobile_platform.urdf"
+default_init_qpos: [ 0, 0, 0, ]
+default_control_mode: "diff_drive"
+cameras:
+  - name: "platform_d415"
+    mount: "realsense"
+    hide_mount_link: true
+    mount_p: [0,0,0]
+    mount_q: [1,0,0,0]
+    width: 1920
+    height: 1080
+    near: 0.001
+    far: 10
+    fx: 1380
+    fy: 1380
+    cx: 960
+    cy: 540
+    skew: 0
+controllers:
+  diff_drive:
+    - controller_type: "MobileDiffDriveVelController"
+      interpolate: false
+      control_joints: [ 'root_x_axis_joint', 'root_y_axis_joint', 'root_z_rotation_joint' ]
+      controller_name: "MobileDiffDriveVelController"
+      joint_damping: 5000.0
+      joint_friction: 0.0
+      diff_vel_min: -0.3
+      diff_vel_max: 0.3

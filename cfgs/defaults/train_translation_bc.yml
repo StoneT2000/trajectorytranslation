@@ -1,0 +1,75 @@
+# experiment hyperparameters for behavior cloning. This is not used however
+
+verbose: True
+device: "cuda"
+
+eval_cfg: None
+pretrained_weights: None
+exp_cfg:
+ 
+  seed: 0
+  steps: 10000
+  eval_freq: 100
+  save_freq: -1
+  batch_size: 512
+  lr: 1e-3
+
+  predict_current_state_only: False
+
+  # following not implemented yet
+  state_loss: False
+  returns_to_go_loss: False
+
+  # data related
+  drop_last: False
+  
+
+logging_cfg:
+  workspace: results/offline
+  exp_name: test
+  wandb: False
+  tensorboard: True
+  log_freq: 20
+
+dataset_cfg: 
+  dataset: "???"
+  train_ids: "???"
+  val_ids: "???"
+
+model_cfg:
+  type: "TranslationTransformer"
+
+  state_dims: "???"
+  teacher_dims: "???"
+  act_dims: "???"
+
+  max_time_steps: 1024
+  # below should also be merged into dataset_cfgs
+  max_student_length: 128
+  max_teacher_length: 32
+  trajectory_sample_skip_steps: 2
+  # equivalent to positional embeddings
+  timestep_embeddings: False
+  # whether to include past student actions into the student stack frames fed into transformer
+  use_past_actions: True
+  # whether to use layer normalization after the initial embedding layers of student/teacher states and student actions
+  embed_layer_norm: True
+  use_returns_to_go: False
+  # translation model specific configs
+  stack_size: 5
+  state_embedding_hidden_sizes: (32,)
+  state_embedding_activation: 'relu'
+  final_mlp_hidden_sizes: ()
+  final_mlp_activation: 'tanh'
+  
+  final_mlp_action_pred_activation: 'tanh'
+  final_mlp_state_pred_activation: 'tanh'
+
+  # gpt2 specific https://huggingface.co/docs/transformers/model_doc/gpt2#transformers.GPT2Config
+  transformer_config:
+    n_head: 2
+    n_layer: 2
+    activation_function: 'gelu_new'
+    resid_pdrop: 0.1 
+    embd_pdrop: 0.1
+    attn_pdrop: 0.1

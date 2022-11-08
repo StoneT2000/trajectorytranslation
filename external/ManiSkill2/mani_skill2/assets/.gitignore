@@ -1,0 +1,6 @@
+hab_ycb*
+partnet_mobility_configs
+partnet_mobility_dataset
+
+*.zip
+*.convex.stl

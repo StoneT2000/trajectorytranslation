@@ -15,8 +15,6 @@ results/
 test_results/
 videos/
 
-external/
-
 wandb
 
 # TODO uncomment once ready
@@ -24,8 +22,6 @@ tr2/planner
 tr2/envs/opendrawer/README.md
 scripts/realworld
 scripts/plan_translate.py
-# has bug to fix
-scripts/exps/blockstacking/eval_test_stack_pyramid.sh
 
 resultsall
 allcfgs

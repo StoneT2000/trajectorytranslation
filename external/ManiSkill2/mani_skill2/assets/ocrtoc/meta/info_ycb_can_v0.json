@@ -1,0 +1,22 @@
+{
+    "master_chef_can": {
+        "scales": [
+            0.5
+        ]
+    },
+    "potted_meat_can": {
+        "scales": [
+            1.0
+        ]
+    },
+    "tomato_soup_can": {
+        "scales": [
+            1.0
+        ]
+    },
+    "tuna_fish_can": {
+        "scales": [
+            0.5
+        ]
+    }
+}

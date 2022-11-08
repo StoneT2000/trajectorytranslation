@@ -1,0 +1,105 @@
+# experiment hyperparameters
+verbose: 1
+device: "cuda"
+env: "???"
+
+env_cfg:
+  task_agnostic: True
+  reward_type: "trajectory"
+  # path to file with trajectory ids
+  trajectories: "???"
+  trajectories_dataset: "???"
+  max_trajectory_skip_steps: 5
+eval_cfg: None
+exp_cfg:
+
+  save_model: True
+
+  algo: ppo
+  seed: 0
+
+  # env setup
+  n_envs: 16
+
+  ## trajectory collection related ##
+  # how fast the model must get a done=True signal relative to length of the teacher
+  good_test_trajectory_threshold: None
+
+  # ppo configs
+  epochs: 2000
+  critic_warmup_epochs: 0
+  update_iters: 3
+  steps_per_epoch: 20000
+  batch_size: 512
+  pi_coef: 1.0
+  gae_lambda: 0.95
+  target_kl: 0.2
+  log_std_scale: -0.5
+  pi_lr: 3e-4
+  vf_lr: 3e-4
+  gamma: 0.99
+  accumulate_grads: False
+
+  dapg: False
+  dapg_cfg:
+    dapg_lambda: 0.1
+    dapg_damping: 0.99
+    dapg_nll_loss: False
+    trajectories_dataset: None
+    train_ids: None
+
+  save_freq: 5
+  eval_freq: 50
+  eval_save_video: True
+
+  # following not implemented yet
+  state_loss: False
+  returns_to_go_loss: False
+  
+
+logging_cfg:
+  workspace: results
+  exp_name: test
+  wandb: False
+  tensorboard: True
+  log_freq: 1
+
+model_cfg:
+  type: "TranslationTransformer"
+  pretrained_actor_weights: None
+  pretrained_critic_weights: None
+
+  state_dims: "???"
+  teacher_dims: "???"
+  act_dims: "???"
+
+  max_time_steps: 1024
+  # below should also be merged into dataset_cfgs
+  max_student_length: 300
+  max_teacher_length: 32
+  trajectory_sample_skip_steps: 2
+  timestep_embeddings: False
+  # whether to include past student actions into the student stack frames fed into transformer
+  use_past_actions: False
+  # whether to use layer normalization after the initial embedding layers of student/teacher states and student actions
+  embed_layer_norm: True
+  use_returns_to_go: False
+
+  # translation model specific configs
+  stack_size: 5
+  state_embedding_hidden_sizes: (128,)
+  state_embedding_activation: 'relu'
+  final_mlp_hidden_sizes: (128, 128)
+  final_mlp_activation: 'relu'
+  
+  final_mlp_action_pred_activation: 'tanh'
+  final_mlp_state_pred_activation: 'tanh'
+
+  # gpt2 specific https://huggingface.co/docs/transformers/model_doc/gpt2#transformers.GPT2Config
+  transformer_config:
+    n_head: 2
+    n_layer: 4
+    activation_function: 'gelu_new'
+    resid_pdrop: 0.1 
+    embd_pdrop: 0.1
+    attn_pdrop: 0.1

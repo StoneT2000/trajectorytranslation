@@ -1,0 +1,21 @@
+env: "OpenDrawerTrajectory-v0"
+device: "cuda"
+env_cfg:
+  early_success: True
+  task_agnostic: False
+  reward_type: "trajectory"
+  trajectories: 'datasets/opendrawer/dataset_open_train_ids.npy'
+  trajectories_dataset: "datasets/opendrawer/dataset_open.pkl"
+  max_trajectory_skip_steps: 15
+  fixed_max_ep_len: 200
+  give_traj_id: False
+  max_trajectory_length: 1000
+  max_world_state_stray_dist: 0.1
+  max_coord_stray_dist: 0.1
+  robot_type: 'Arm'
+  controller: 'arm'
+  obs_mode: custom
+  mode: 1
+
+test_n: 128
+n_envs: 4

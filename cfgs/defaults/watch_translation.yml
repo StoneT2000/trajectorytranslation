@@ -1,0 +1,34 @@
+device: "cuda"
+
+# the env to watch on
+env: "???"
+
+env_cfg:
+  # whether done signal is based on matching path or task success 
+  # with task success, you can avoid the directed teacher path and achieve the same end state and be given success signal
+  task_agnostic: True
+  reward_type: "trajectory"
+
+  # ignored
+  trajectories: None
+
+  # the dataset with teacher trajectories (student not necessary)
+  trajectories_dataset: "???"
+  max_trajectory_skip_steps: 5
+
+# If True, masks out teacher trajectory and zeros it out
+ignore_teacher: False
+# If True, saves video locally
+save_video: False
+
+# id to watch
+traj_id: "???"
+
+# path to model weights. Model should be a TranslationPolicy
+model: None
+# alternatively provide a trajectory with actions to watch
+traj: None
+
+save_dir: "./"
+
+save_attn: False

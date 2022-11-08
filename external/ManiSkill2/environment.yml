@@ -1,0 +1,17 @@
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - numpy
+  - tqdm
+  - pyyaml
+  - imageio
+  - pip:
+      - black
+      - isort
+      - gym==0.18.3
+      - transforms3d
+      - opencv-python
+      - trimesh

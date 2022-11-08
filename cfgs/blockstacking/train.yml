@@ -1,0 +1,91 @@
+env: "BlockStackTrajectory-v0"
+device: "cuda"
+env_cfg:
+  early_success: False
+  task_agnostic: False
+  reward_type: "trajectory"
+  # path to file with trajectory ids
+  trajectories: "datasets/blockstacking/dataset_train_ids.npy"
+  trajectories_dataset: "datasets/blockstacking/dataset.pkl"
+  max_trajectory_skip_steps: 15 # not using
+  give_traj_id: False
+  max_rot_stray_dist: 0.25 # for an angle smaller than 60 deg
+  max_world_state_stray_dist: 0.03 # half block size, for diff in blocks
+  max_coord_stray_dist: 0.03 # diff between  coords of teacher / student panda hands
+  robot_type: 'Arm'
+  controller: 'ee'
+  goal: pick_and_place_train
+
+exp_cfg:
+  algo: ppo
+  seed: 0
+  n_envs: 16
+
+  gae_lambda: 0.95
+  target_kl: 0.15
+  log_std_scale: -0.5
+  pi_lr: 3e-4
+  vf_lr: 3e-4
+
+  accumulate_grads: False
+  #ppo configs
+  epochs: 2000
+  critic_warmup_epochs: 0
+  update_iters: 3
+  steps_per_epoch: 20000
+  batch_size: 1024
+  eval_freq: 50
+  eval_save_video: True
+  max_ep_len: 200
+
+  dapg: False
+
+logging_cfg:
+  exp_name: transformer_scratch
+  wandb: False
+  tensorboard: True
+  log_freq: 1
+
+model_cfg:
+  type: "TranslationTransformer"
+  pretrained_actor_weights: None
+  pretrained_critic_weights: None
+
+  state_dims: 32
+  act_dims: 4
+  teacher_dims: 10
+
+  max_time_steps: 1024
+  # below should also be merged into dataset_cfgs
+  max_student_length: 300
+  max_teacher_length: 55
+  trajectory_sample_skip_steps: 1
+  # equivalent to positional embeddings
+  # timestep_embeddings: True
+  timestep_embeddings: False
+  # whether to include past student actions into the student stack frames fed into transformer
+  use_past_actions: False
+  # whether to use layer normalization after the initial embedding layers of student/teacher states and student actions
+  embed_layer_norm: True
+
+  # translation model specific configs
+  stack_size: 5
+  state_embedding_hidden_sizes: (64,)
+  state_embedding_activation: 'relu'
+  final_mlp_hidden_sizes: (128, 128)
+  final_mlp_activation: 'relu'
+  
+  final_mlp_action_pred_activation: 'tanh'
+  final_mlp_state_pred_activation: 'tanh'
+
+  encoder_config:
+    type: "state"
+
+  # gpt2 specific https://huggingface.co/docs/transformers/model_doc/gpt2#transformers.GPT2Config
+  transformer_config:
+    n_head: 2
+    n_layer: 4
+    activation_function: 'gelu_new'
+    resid_pdrop: 0.1 
+    embd_pdrop: 0.1
+    attn_pdrop: 0.1

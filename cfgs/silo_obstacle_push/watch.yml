@@ -1,0 +1,17 @@
+env: "BoxPusherTrajectory-v0"
+device: cuda
+env_cfg:
+  task_agnostic: False
+  early_success: False
+  reward_type: "trajectory"
+  trajectories: "datasets/silo_obstacle_push/dataset_train_ids.npy"
+  trajectories_dataset: "datasets/silo_obstacle_push/dataset.pkl"
+  max_trajectory_skip_steps: 15
+  control_type: "2D-continuous"
+  exclude_target_state: True
+  env_rew_weight: 0.1
+  speed_factor: 1
+  fixed_max_ep_len: 50
+  task: 'silo_obstacle_push'
+# python scripts/watch_translation.py cfg=cfgs/silo_obstacle_push/watch_translation.yml \
+#     model=results/online/silo_obstacle_push/transformer/9252/models/best_train_EpRet.pt

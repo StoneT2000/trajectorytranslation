@@ -1,0 +1,62 @@
+name: tr2
+channels:
+  - conda-forge
+  - pytorch
+  - huggingface
+dependencies:
+  - python=3.8
+  - numpy
+  - matplotlib
+  - dill
+  - pandas
+  - seaborn
+  - scipy
+  - jupyterlab
+  - pip
+  - ipdb
+  - cython
+  - pyarrow >= 2
+  - scikit-learn
+  - tqdm
+
+  - mpi4py
+  
+  - yaml
+  
+  - pytorch::pytorch
+  - torchvision
+  - torchaudio
+  - cudatoolkit=11.3
+
+  - opencv
+  - gym
+  - transforms3d
+  - pybox2d
+
+  - transformers
+
+  - ipywidgets
+  - black
+  - isort
+  - pip:
+    - sapien
+    - moviepy
+    - tensorboard
+    - tensorflow
+    - huggingface_hub
+    - stable-baselines3
+    
+    - wandb
+    - omegaconf
+    - pygame
+    - pyglet
+
+    # maniskill
+    - open3d
+    - trimesh
+    - shapely
+    - rtree
+    # envs
+    - gym-minigrid
+    - dm_control
+    - x-magical
