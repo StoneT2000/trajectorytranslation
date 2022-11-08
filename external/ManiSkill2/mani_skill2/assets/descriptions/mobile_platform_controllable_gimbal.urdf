@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com)
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="mobile_platform_controllable_gimbal">
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="blue">
+    <color rgba="0.0 0.0 0.8 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
+  </material>
+  <material name="brown">
+    <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.8 0.0 0.0 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+  <material name="Beige">
+    <color rgba="1.0 0.784 0.5765 1.0"/>
+  </material>
+  <link name="root">
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0.04" ixy="0.00" ixz="0.00" iyy="0.04" iyz="0.00" izz="0.02"/>
+    </inertial>
+  </link>
+  <link name="mobile_link_1">
+  </link>
+  <link name="mobile_link_2">
+  </link>
+  <joint name="root_x_axis_joint" type="prismatic">
+    <parent link="root"/>
+    <child link="mobile_link_1"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-10" upper="10" velocity="0.50"/>
+    <dynamics damping="10.0" friction="10"/>
+  </joint>
+  <joint name="root_y_axis_joint" type="prismatic">
+    <parent link="mobile_link_1"/>
+    <child link="mobile_link_2"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-10" upper="10" velocity="0.50"/>
+    <dynamics damping="10.0" friction="10"/>
+  </joint>
+  <joint name="root_z_rotation_joint" type="continuous">
+    <parent link="mobile_link_2"/>
+    <child link="base_link"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="10.0" friction="1"/>
+  </joint>
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0341950059245064 -0.000488202669057205 -0.023484876962622"
+        rpy="0 0 0" />
+      <mass
+        value="40.9486107084908" />
+      <inertia
+        ixx="0.614175745536508"
+        ixy="-0.00029161014956335"
+        ixz="0.00349696614970323"
+        iyy="0.585385929134616"
+        iyz="0.00393630741003468"
+        izz="1.14116882796746" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="velodyne">
+    <inertial>
+      <origin
+        xyz="-0.000287261593383881 -1.71282553980455E-06 -0.00210508552484484"
+        rpy="0 0 0" />
+      <mass
+        value="1.59564547671227" />
+      <inertia
+        ixx="0.00173425514736997"
+        ixy="9.47838989708527E-10"
+        ixz="-1.3496082303702E-05"
+        iyy="0.00176389158236456"
+        iyz="-9.004773487459E-08"
+        izz="0.00210570589727052" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/velodyne.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/velodyne.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="velodyne_joint"
+    type="fixed">
+    <origin
+      xyz="-0.11 0 0.2388"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="velodyne" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="gimbal_base">
+    <inertial>
+      <origin
+        xyz="0 -2.77555756156289E-17 -0.072001781384442"
+        rpy="0 0 0" />
+      <mass
+        value="0.509564966854981" />
+      <inertia
+        ixx="0.00460691407459133"
+        ixy="4.15635367174835E-19"
+        ixz="-1.18148517933091E-18"
+        iyy="0.00461472657459133"
+        iyz="3.67390006628001E-19"
+        izz="0.000946833044910318" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/gimbal_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/gimbal_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gimbal_base_joint"
+    type="fixed">
+    <origin
+      xyz="-0.225 -0.2 0.83"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="gimbal_base" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="gimbal_yaw">
+    <inertial>
+      <origin
+        xyz="2.50753308603247E-05 0 0.00389164940243814"
+        rpy="0 0 0" />
+      <mass
+        value="0.0783038684288936" />
+      <inertia
+        ixx="3.25784849998099E-05"
+        ixy="-3.24641951102788E-22"
+        ixz="-1.19937183517807E-08"
+        iyy="3.5498566498157E-05"
+        iyz="-2.46038653698381E-22"
+        izz="5.90679201142496E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/gimbal_yaw.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/gimbal_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gimbal_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0.07"
+      rpy="0 0 0" />
+    <parent
+      link="gimbal_base" />
+    <child
+      link="gimbal_yaw" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1416"
+      upper="3.1416"
+      effort="1"
+      velocity="10" />
+  </joint>
+  <link
+    name="gimbal_pitch">
+    <inertial>
+      <origin
+        xyz="0.0230991288595745 -2.77555756156289E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.00629053213386462" />
+      <inertia
+        ixx="3.42802231918139E-06"
+        ixy="2.36055740704576E-21"
+        ixz="-8.87662821812963E-23"
+        iyy="1.30341273174401E-06"
+        iyz="8.73092983177933E-23"
+        izz="4.4594233809342E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/gimbal_pitch.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/gimbal_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gimbal_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="0.01 0 0.01"
+      rpy="0 -1.5708 0" />
+    <parent
+      link="gimbal_yaw" />
+    <child
+      link="gimbal_pitch" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="1"
+      velocity="10" />
+  </joint>
+  <link
+    name="realsense">
+    <inertial>
+      <origin
+        xyz="-0.00148582713460665 -0.00537331155862492 0.0114430980390411"
+        rpy="0 0 0" />
+      <mass
+        value="0.0346937941885999" />
+      <inertia
+        ixx="2.24677046023847E-05"
+        ixy="2.74694997947627E-07"
+        ixz="7.68563645568261E-11"
+        iyy="1.45075356803183E-06"
+        iyz="1.67781904213168E-09"
+        izz="2.14371832325338E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/realsense.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="xmate3_description/meshes/realsense.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="realsense_joint"
+    type="fixed">
+    <origin
+      xyz="0.037 0 0"
+      rpy="0 1.5708 0" />
+    <parent
+      link="gimbal_pitch" />
+    <child
+      link="realsense" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  
+</robot>

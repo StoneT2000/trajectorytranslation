@@ -15,8 +15,6 @@ results/
 test_results/
 videos/
 
-external/
-
 wandb
 
 # TODO uncomment once ready

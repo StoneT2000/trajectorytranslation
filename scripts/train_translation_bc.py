@@ -1,3 +1,7 @@
+"""
+Training a TR2-GPT2 model with behavior cloning. Not used in the main paper but works
+"""
+
 from collections import defaultdict
 import os
 import os.path as osp

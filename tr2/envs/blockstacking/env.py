@@ -204,29 +204,24 @@ class BlockStackPandaEnv(PandaEnv):
                 self.visual_goals.append(builder.build_static('goal_{:d}'.format(i)))
             
         self._add_ground()
-        # self.block_half_size = 0.025/2
         self.block_half_size = 0.02
         self.blocks = []
         for i in range(self._num_blocks):
             builder = self._scene.create_actor_builder()
             half_size = [self.block_half_size for _ in range(3)]
-            # builder.add_box_collision(half_size=half_size, material=self.block_material)
             if self.test_task and "bridge" in self._goal:
                 if i == self._num_blocks - 1:
                     half_size[0] = self.block_half_size * 3
             builder.add_box_collision(half_size=half_size)
             builder.add_box_visual(half_size=half_size, color=[1, 0, 0])
-            # self.cubeA = builder.build("block")
             self.blocks.append(builder.build('block_'+str(i)))
         if self._goal == 'pick_and_place_train':
             self.completed_blocks = []
             for i in range(3):
                 builder=self._scene.create_actor_builder()
                 half_size=[self.block_half_size for _ in range(3)]
-                # builder.add_box_collision(half_size=half_size, material=self.block_material)
                 builder.add_box_collision(half_size=half_size)
                 builder.add_box_visual(half_size=half_size, color=[1, 0, 0])
-                # self.cubeA = builder.build("block")
                 self.completed_blocks.append(builder.build('completed_block_' + str(i)))
 
             
@@ -234,7 +229,6 @@ class BlockStackPandaEnv(PandaEnv):
             self.completed_blocks = []
             builder=self._scene.create_actor_builder()
             half_size=[0.25, 0.01, 0.2]
-            # builder.add_box_collision(half_size=half_size, material=self.block_material)
             builder.add_box_collision(half_size=half_size)
             builder.add_box_visual(half_size=half_size, color=[0.8, 0.4, 0.4])
             self.walls: List[sapien.Actor] = []
@@ -242,14 +236,6 @@ class BlockStackPandaEnv(PandaEnv):
             self.walls[0].set_pose(sapien.Pose(np.array([-0.05, 0.24, 0.1])))
             self.walls += [builder.build_kinematic('right_wall')]
             self.walls[1].set_pose(sapien.Pose(np.array([-0.05, -0.24, 0.1])))
-            # for i in range(1):
-            #     builder=self._scene.create_actor_builder()
-            #     half_size=[self.block_half_size for _ in range(3)]
-            #     # builder.add_box_collision(half_size=half_size, material=self.block_material)
-            #     builder.add_box_collision(half_size=half_size)
-            #     builder.add_box_visual(half_size=half_size, color=[1, 0, 0])
-            #     # self.cubeA = builder.build("block")
-            #     self.completed_blocks.append(builder.build('completed_block_' + str(i)))
 
     def _initialize_actors(self):
         self.cur_block_idx = 0
@@ -1069,63 +1055,3 @@ class BlockStackMagicPandaEnv(BlockStackPandaEnv, FloatPandaEnv):
         if self.goal_visual is not None:
             self.goal_visual.set_pose(Pose(self.goal_coords[0]))
         self.draw_goal_site()
-
-
-if __name__ == '__main__':
-
-    def animate(imgs, filename="animation.mp4", _return=True, fps=10):
-        if isinstance(imgs, dict):
-            imgs=imgs["image"]
-        print(f"animating {filename}")
-        from moviepy.editor import ImageSequenceClip
-
-        imgs=ImageSequenceClip(imgs, fps=fps)
-        imgs.write_videofile(filename, fps=fps)
-        if _return:
-            from IPython.display import Video
-
-            return Video(filename, embed=True)
-
-    import gym
-    student_env_name='BlockStackArm-v0'
-    student_env: BlockStackFloatPandaEnv=gym.make(
-        student_env_name,
-        reward_mode='sparse',
-        obs_mode='state_dict',
-        num_blocks=1,
-        goal='pick_and_place_train',
-    )
-    student_env.reset(seed=0)
-    for _ in range(30):
-        student_env.step(action=np.ones(4))
-    print('truth', student_env.get_articulations()[0].get_qpos())
-    state = student_env.get_state()
-    student_env.reset(seed=1)
-    print('new_env', student_env.get_articulations()[0].get_qpos())
-
-    student_env.set_state(state)
-    print('after setstate', student_env.get_articulations()[0].get_qpos())
-
-    print('done')
-    exit()
-    imgs = []
-    rgb = []
-    d = []
-    seg = []
-    for _ in range(200):
-        student_env.step(action=np.zeros(8))
-        img_dict = student_env.render('state_visual')
-        # rgb.append(np.clip(img_dict['rgb']*255,0,255))
-        # d.append(np.repeat(np.clip(img_dict['depth']*255,0,255).astype(np.uint8), 3, axis=-1))
-        # seg.append(np.repeat(img_dict['seg'].astype(np.uint8)[..., np.newaxis], 3, axis=-1))
-        #pdb.set_trace()
-        #
-        # img = observations_to_images(img_dict)
-        #
-        # real_img = tile_images(img)
-        # real_img[256:256+128,0:]=get_seg_visualization(np.array(real_img[256:256+128,0:]))
-        seg_img = get_seg_visualization(img_dict['visual_seg'])
-        imgs.append(seg_img)
-        # imgs.append(img)
-    #pdb.set_trace()
-    animate(imgs, 'test_cam_seg.mp4',fps=20)

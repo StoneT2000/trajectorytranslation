@@ -1,0 +1,22 @@
+{
+    "bleach_cleanser": {
+        "scales": [
+            1.0
+        ]
+    },
+    "bowl": {
+        "scales": [
+            1.0
+        ]
+    },
+    "mustard_bottle": {
+        "scales": [
+            1.0
+        ]
+    },
+    "plate": {
+        "scales": [
+            1.0
+        ]
+    }
+}

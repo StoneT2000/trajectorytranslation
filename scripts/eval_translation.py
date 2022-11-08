@@ -1,3 +1,7 @@
+"""
+Evaluate a model in the TR2 setup
+"""
+
 import pickle
 import gym
 from omegaconf import OmegaConf

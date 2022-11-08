@@ -176,30 +176,6 @@ class CouchmovingTrajectory(TrajectoryEnv):
     def seed(self, seed, *args, **kwargs):
         from gym.utils import seeding
         self.np_random, seed = seeding.np_random(seed)
-    
-    def visualize_attn(self, attn):
-        # attn should be a linear mat represent a value for each abstract frame
-        for attn_block in self.attn_blocks:
-            self.env._scene.remove_actor(attn_block)
-        self.attn_blocks = []
-        # rescale attn
-        attn_rescaled = attn / attn.max()
-        for i in range(self.max_trajectory_length - self.traj_len, self.max_trajectory_length):
-            o = self.trajectory_observations[i]
-            heat = attn_rescaled[i]
-            color = plt.colormaps['GnBu'](heat * 1)[:3]
-            pose = sapien.Pose([o[0], o[1], 0])
-            block = create_box(
-                self.env._scene,
-                pose=pose,
-                half_size=[0.06,0.06, 0.01 - 0.01*(i / len(attn_rescaled))],
-                color=color,
-                name=f"heatmap_{i}",
-                is_kinematic=False,
-                collision=False
-            )
-            self.attn_blocks.append(block)
-
 
     def draw_teacher_trajectory(self, skip=4):
         for ball in self.teacher_balls:
