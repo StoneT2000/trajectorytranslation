@@ -96,7 +96,6 @@ def collect_heuristic_teacher_traj(env: OpenCabinetDrawerMagicEnv, render=False,
     endmins, endmaxs = env.get_aabb_for_min_x(env.target_link)
     qpos_extent_dist = maxs[0] - endmaxs[0]
     # reset cabinet
-    # print(qpos_extent_dist, lmax, lmin)
     env.cabinet.set_qpos(cabinet_qpos)
 
     def goto(xyz, gripper_action, dist_threshold=0.01, scale_action=1):

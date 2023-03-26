@@ -1,4 +1,4 @@
-# All scripts used to train models for the boxpushing environment
+# All scripts used to train models for the opendrawer environment
 
 # seeds used are 5670, 5791, 6983
 seed=5670

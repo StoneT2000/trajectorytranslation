@@ -720,9 +720,12 @@ class OpenCabinetDrawerMagicEnv(OpenCabinetEnvBase):
         mins, maxs = self.get_aabb_for_min_x(self.target_link)
         dense_obs[:5] = qpos
         dense_obs[5:10] = qvel
+        if self.obs_mode == 'state':
+            dense_obs = np.concatenate([dense_obs, mins, maxs])
+            # dense_obs[10:10+3] = mins
+            # dense_obs[13:16] = maxs
 
-
-        if self.obs_mode == 'pointcloud':
+        elif self.obs_mode == 'pointcloud':
             super_obs = super().get_obs()
             raw_pcd = super_obs['pointcloud']
             mask0 = raw_pcd['seg'][:,0]

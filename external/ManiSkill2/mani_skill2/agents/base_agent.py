@@ -3,13 +3,17 @@ from collections import OrderedDict, deque
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+ROOT_DIR = Path(__file__).parent.parent.resolve()
+ASSET_DIR = ROOT_DIR / "assets"
+AGENT_CONFIG_DIR = ASSET_DIR / "config_files/agents"
+DESCRIPTION_DIR = ASSET_DIR / "descriptions"
+
 import attr
 import numpy as np
 import sapien.core as sapien
 import yaml
 from gym import spaces
-
-from mani_skill2 import ASSET_DIR, DESCRIPTION_DIR
+# from mani_skill2 import ASSET_DIR, DESCRIPTION_DIR
 from mani_skill2.agents.active_light_sensor import ActiveLightSensor
 from mani_skill2.agents.camera import get_camera_images, get_camera_pcd
 from mani_skill2.agents.controllers.combined_controller import CombinedController

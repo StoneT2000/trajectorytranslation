@@ -1,25 +1,33 @@
 # Table 1 results
 
 ## Open 1 unseen drawer - Row 14
-# seeds used are 5670, 5791, 6983
-seed=5670
+seeds=( 3773 5670 5791 6983 9009 )
 
 ## TR2-GPT2
-python scripts/eval_translation.py cfg=cfgs/opendrawer/eval.yml \
-    env_cfg.trajectories="datasets/opendrawer/dataset_test.npy" env_cfg.trajectories_dataset="datasets/opendrawer/dataset_test.pkl" \
-    model=results/couchmoving/transformer/$seed/models/best_train_EpRet.pt
-
+for seed in ${seeds[@]}
+do
+    python scripts/eval_translation.py cfg=cfgs/opendrawer/eval.yml \
+        env_cfg.trajectories="datasets/opendrawer/dataset_test_ids.npy" env_cfg.trajectories_dataset="datasets/opendrawer/dataset_test.pkl" \
+        model=results/opendrawer/transformer/$seed/models/best_train_EpRet.pt
+done
 ## TR2-LSTM
-python scripts/eval_translation.py cfg=cfgs/opendrawer/eval.yml \
-    env_cfg.trajectories="datasets/opendrawer/dataset_test.npy" env_cfg.trajectories_dataset="datasets/opendrawer/dataset_test.pkl" \
-    model=results/couchmoving/lstm/$seed/models/best_train_EpRet.pt
-
+for seed in ${seeds[@]}
+do
+    python scripts/eval_translation.py cfg=cfgs/opendrawer/eval.yml \
+        env_cfg.trajectories="datasets/opendrawer/dataset_test_ids.npy" env_cfg.trajectories_dataset="datasets/opendrawer/dataset_test.pkl" \
+        model=results/opendrawer/lstm/$seed/models/best_train_EpRet.pt
+done
 ## SGC
-python scripts/eval_translation.py cfg=cfgs/opendrawer/eval.yml \
-    env_cfg.trajectories="datasets/opendrawer/dataset_test.npy" env_cfg.trajectories_dataset="datasets/opendrawer/dataset_test.pkl" \
-    model=results/couchmoving/mlp_subgoal/$seed/models/best_train_EpRet.pt env_cfg.sub_goals=True
-
+for seed in ${seeds[@]}
+do
+    python scripts/eval_translation.py cfg=cfgs/opendrawer/eval.yml \
+        env_cfg.trajectories="datasets/opendrawer/dataset_test_ids.npy" env_cfg.trajectories_dataset="datasets/opendrawer/dataset_test.pkl" \
+        model=results/opendrawer/mlp_subgoal/$seed/models/best_train_EpRet.pt env_cfg.sub_goals=True
+done
 ## GC
-python scripts/eval_translation.py cfg=cfgs/opendrawer/eval.yml \
-    env_cfg.trajectories="datasets/opendrawer/dataset_test.npy" env_cfg.trajectories_dataset="datasets/opendrawer/dataset_test.pkl" \
-    model=results/couchmoving/mlp/$seed/models/best_train_EpRet.pt
+for seed in ${seeds[@]}
+do
+    python scripts/eval_translation.py cfg=cfgs/opendrawer/eval.yml \
+        env_cfg.trajectories="datasets/opendrawer/dataset_test_ids.npy" env_cfg.trajectories_dataset="datasets/opendrawer/dataset_test.pkl" \
+        model=results/opendrawer/mlp/$seed/models/best_train_EpRet.pt
+done
