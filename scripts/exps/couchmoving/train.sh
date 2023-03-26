@@ -1,6 +1,6 @@
 # All Training Scripts used to train models for the Couchmoving Environment
 
-# seeds used are 5330, 7263, 9577
+# seeds used are 1256 5330 7263 7299 9577
 seed=5330
 
 ## TR2-GP2
