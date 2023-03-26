@@ -4,14 +4,14 @@
 # Note that 3-2-1 pyramid corresponds with goal=pyramid-3 and 4-3-2-1 pyramid corresponds with goal=pyramid-4
 
 ### TR2-GPT2
-declare -a models=("results/blockstacking/transformer/224_finetune/models/best_train_EpRet.pt" "results/blockstacking/transformer/3103_finetune/models/best_train_EpRet.pt" "results/blockstacking/transformer/5280_finetune/models/best_train_EpRet.pt")
+declare -a models=("results/blockstacking/transformer/224_finetune/models/best_train_EpRet.pt" "results/blockstacking/transformer/3103_finetune/models/best_train_EpRet.pt" "results/blockstacking/transformer/5280_finetune/models/best_train_EpRet.pt" "results/blockstacking/transformer/7429_finetune/models/best_train_EpRet.pt" "results/blockstacking/transformer/8820_finetune/models/best_train_EpRet.pt")
 for model in "${models[@]}"
 do
     base="test_results/blockstacking/transformer"
     mkdir -p "test_results/blockstacking/transformer"
     for i in $(seq 2 4)
     do
-        echo "Testing on pyramid " $i
+        echo "results: Testing on pyramid " $i
         max_ep_len=$((i*150))
         echo ${max_ep_len}
         python scripts/eval_translation.py cfg=cfgs/blockstacking/eval.yml \
@@ -28,14 +28,14 @@ done
 
 ### TR2-LSTM
 
-declare -a models=("results/blockstacking/lstm/224/models/best_train_EpRet.pt" "results/blockstacking/lstm/3103/models/best_train_EpRet.pt" "results/blockstacking/lstm/5280/models/best_train_EpRet.pt")
+declare -a models=("results/blockstacking/lstm/224/models/best_train_EpRet.pt" "results/blockstacking/lstm/3103/models/best_train_EpRet.pt" "results/blockstacking/lstm/5280/models/best_train_EpRet.pt" "results/blockstacking/lstm/7429/models/best_train_EpRet.pt" "results/blockstacking/lstm/8820/models/best_train_EpRet.pt")
 for model in "${models[@]}"
 do
     base="test_results/blockstacking/lstm"
     mkdir -p "test_results/blockstacking/lstm"
     for i in $(seq 2 4)
     do
-        echo "Testing on pyramid " $i
+        echo "results: Testing on pyramid " $i
         max_ep_len=$((i*150))
         echo ${max_ep_len}
         python scripts/eval_translation.py cfg=cfgs/blockstacking/eval.yml \
@@ -50,14 +50,15 @@ do
     done
 done
 
-declare -a models=("results/blockstacking/mlp_subgoal/224/models/best_train_EpRet.pt" "results/blockstacking/mlp_subgoal/3103/models/best_train_EpRet.pt" "results/blockstacking/mlp_subgoal/5280/models/best_train_EpRet.pt")
+### SGC
+declare -a models=("results/blockstacking/mlp_subgoal/224/models/best_train_EpRet.pt" "results/blockstacking/mlp_subgoal/3103/models/best_train_EpRet.pt" "results/blockstacking/mlp_subgoal/5280/models/best_train_EpRet.pt" "results/blockstacking/mlp_subgoal/7429/models/best_train_EpRet.pt" "results/blockstacking/mlp_subgoal/8820/models/best_train_EpRet.pt")
 for model in "${models[@]}"
 do
     base="test_results/blockstacking/mlp_subgoal"
     mkdir -p "test_results/blockstacking/mlp_subgoal"
     for i in $(seq 2 4)
     do
-        echo "Testing on pyramid " $i
+        echo "results: Testing on pyramid " $i
         max_ep_len=$((i*150))
         echo ${max_ep_len}
         python scripts/eval_translation.py cfg=cfgs/blockstacking/eval.yml \
@@ -73,14 +74,14 @@ do
 done
 
 ### GC
-declare -a models=("results/blockstacking/mlp/224/models/best_train_EpRet.pt" "results/blockstacking/mlp/3103/models/best_train_EpRet.pt" "results/blockstacking/mlp/5280/models/best_train_EpRet.pt")
+declare -a models=("results/blockstacking/mlp/224/models/best_train_EpRet.pt" "results/blockstacking/mlp/3103/models/best_train_EpRet.pt" "results/blockstacking/mlp/5280/models/best_train_EpRet.pt" "results/blockstacking/mlp/7429/models/best_train_EpRet.pt" "results/blockstacking/mlp/8820/models/best_train_EpRet.pt")
 for model in "${models[@]}"
 do
     base="test_results/blockstacking/mlp"
     mkdir -p "test_results/blockstacking/mlp"
     for i in $(seq 2 4)
     do
-        echo "Testing on pyramid " $i
+        echo "results: Testing on pyramid " $i
         max_ep_len=$((i*150))
         echo ${max_ep_len}
         python scripts/eval_translation.py cfg=cfgs/blockstacking/eval.yml \
