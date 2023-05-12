@@ -1,6 +1,6 @@
-# Abstract-to-Executable Trajectory Translation for One Shot Task Generalization
+# Abstract-to-Executable Trajectory Translation for One Shot Task Generalization (ICML 2023)
 
-This is the official codebase for the paper
+This is the official codebase for the ICML 2023 paper
 
 [Abstract-to-Executable Trajectory Translation for One Shot Task Generalization](https://arxiv.org/abs/2210.07658) by
 
@@ -103,10 +103,10 @@ This part is still WIP as we're cleaning out the old research and experimental c
 To cite our work, you can use the following bibtex
 
 ```
-@article{tao2022tr2,
+@inproceedings{tao2023tr2,
   title     = {Abstract-to-Executable Trajectory Translation for One-Shot Task Generalization}, 
   author    = {Tao, Stone and Li, Xiaochen and Mu, Tongzhou and Huang, Zhiao and Qin, Yuzhe and Su, Hao},
-  journal   = {arXiv},
-  year      = {2022},
+  booktitle = {Fortieth International Conference on Machine Learning},
+  year      = {2023},
 }
 ```
